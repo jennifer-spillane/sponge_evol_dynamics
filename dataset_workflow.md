@@ -5,8 +5,18 @@ Nhen and then Troy have been diligently assembling transcriptomes for this proje
 This is what Nhen and Troy were doing in terms of processing:  
 - downloading transcriptome reads from the ENA  
 - removing the spaces from their headers `sed -i 's_ __' file_1.fastq`  
-- subsampling down to 35 million bp if necessary `seqtk sample -s 51 genus_species_1.fastq 35000000 > genus_species_sub_1.fastq`  
-- assembling using the ORP 
+- subsampling down to 35 million bp if necessary `seqtk sample -s 51 Genus_species_1.fastq 35000000 > Genus_species_sub_1.fastq`  
+- assembling using the ORP  
+    `oyster.mk main \
+    TMP_FILT=1 \
+    STRAND=RF \
+    MEM=110 \
+    CPU=24 \
+    READ1=Genus_species_1.fastq \
+    READ2=Genus_species_2.fastq \
+    RUNOUT=Genus_species`  
+
+This results in assembled transcriptomes that automatically get scored with TransRate and BUSCO at the end of the ORP run. 
 
 This is what Hannah was doing in terms of processing:  
 
