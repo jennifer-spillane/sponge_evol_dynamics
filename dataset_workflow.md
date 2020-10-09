@@ -6,9 +6,9 @@ Nhen and then Troy have been diligently assembling transcriptomes for this proje
 - downloaded transcriptome reads from the ENA  
 - removed the spaces from their headers  
     `sed -i 's_ __' file_1.fastq`  
-- subsampled down to 35 million bp if necessary  
+- subsampled down to 35 million bp if necessary (1.2-r94)  
     `seqtk sample -s 51 Genus_species_1.fastq 35000000 > Genus_species_sub_1.fastq`  
-- assembled using the ORP  
+- assembled using the ORP (2.2.3)  
     `oyster.mk main TMP_FILT=1 STRAND=RF MEM=110 CPU=24 READ1=Genus_species_1.fastq READ2=Genus_species_2.fastq RUNOUT=Genus_species`  
 - predicted proteins with TransDecoder  
     `TransDecoder.LongOrfs -t Genus_species.fasta`  
@@ -23,7 +23,7 @@ Nhen and then Troy have been diligently assembling transcriptomes for this proje
 We also downloaded already established protein datasets from genomes in various databases (Ensembl, Compagen)  
 
 **Steps common to all datasets**  
-- ran cd-hit on each protein set with threshold of 98% similar  
+- ran cd-hit (V4.7) on each protein set with threshold of 98% similar  
     `cd-hit -i Genus_species.fasta.transdecoder.pep -o Genus_species_98.fasta -c 0.98 -n 5 -d 0`  
 - changed headers to be simple and informative  
     `awk '/^>/{print ">Genus_species_" ++i; next}{print}' Genus_species_98.fasta > Genus_species.fa`  
