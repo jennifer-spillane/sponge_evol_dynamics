@@ -2,6 +2,7 @@
 
 I want to be as sure as I can that whatever we end up finding (in the way of sponge gene family losses) is a real finding, and not an artifact of some aspect of the analysis. Things in this section are along those lines.
 
+
 ### What if sponge genomes and transcriptomes are less complete than other clades?
 
 If sponge datasets are less complete, than what looks like loss could just be a crappy quality dataset, and we wouldn't be able to say that the losses are actually losses.
@@ -11,6 +12,7 @@ This is not much of an issue because we are staying zoomed out in terms of scale
 Also, we are looking at the last common ancestor node for each phylum, in order to get flagged as a loss, the gene family has to be missing from all of the organisms in that clade in our tree. For sponges, this is 24 chances for one of the datasets to be complete enough to contain the gene family in question, which is not nothing.
 
 Also also, plenty of the sponges score quite high in terms of genic completeness as measured by BUSCO, and all of our organisms (except hexactinellids) have BUSCO scores above 80, so they are pretty complete. It is very unlikely that each dataset is missing the exact same things, so this is not much of a danger.
+
 
 ### Are sponge sequences not getting put into orthogroups in the same proportions as other organisms?
 
@@ -28,4 +30,9 @@ Joe Ryan asked (and I realized I didn't know the answer right away) if the "spec
 
 I thought about writing a script to test this that would remake all of the orthofinder stats, but as I was looking at the output files and planning my script, I realized I could just pick a test case and do some counting. In the `/mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/` directory there are fasta files for each "orthogroup" from 0 to 870554 in this case. I picked Xestospongia_testudinaria because it is the last species alphabetically, so I already knew the end point of its orthogroups (870554). Then I just had to find the very first time it was the only sequence in an "orthogroup". This turned out to be 8980 "orthogroups" back down the line (861575 is the first time there is a single sequence and it belongs to Xestospongia_testudinaria). Finally, this number is the same number listed in the Statistics_PerSpecies.tsv file in the orthofinder stats files, which means that orthofinder is counting these single sequence "orthogroups" not as orthogroups at all, but as unclassified genes, which is exactly what we want. *whew*  
 
-So the numbers of the density plots hold up, so far as they go. 
+So the numbers of the density plots hold up, so far as they go.  
+
+
+### What if there are multiple genes on a single transcript?  
+
+If, in our many transcriptomic datasets included in this study, there are transcripts that contain more than one gene (potential operons)
