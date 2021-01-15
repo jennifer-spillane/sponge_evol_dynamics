@@ -76,3 +76,8 @@ I'll do this in three different groups, with different thresholds for keeping an
 
 **75.4%:** `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/half_species.py -m all_114_presabs.tsv -o presabs_75.tsv -c 86`  
 4470 orthogroups left  
+
+
+Need to check these and note this process  
+[1] "OG0000055" "OG0000373" "OG0000524" "OG0001113" "OG0001236" "OG0002078" "OG0003933" "OG0004588"
+[9] "OG0004741" "OG0005556" "OG0005926" "OG0006073" "OG0006167" "OG0007000"
