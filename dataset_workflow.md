@@ -78,6 +78,38 @@ I'll do this in three different groups, with different thresholds for keeping an
 4470 orthogroups left  
 
 
-Need to check these and note this process  
-[1] "OG0000055" "OG0000373" "OG0000524" "OG0001113" "OG0001236" "OG0002078" "OG0003933" "OG0004588"
-[9] "OG0004741" "OG0005556" "OG0005926" "OG0006073" "OG0006167" "OG0007000"
+**Update: we might not need the presence/absence matrix or the versions with different percentages. Many of the analyses below contain all of the orthogroups we found (105177)**  
+
+
+### Dollo Parsimony  
+
+Sabrina pulled a dollo parsimony script from another paper that she worked on and got it to stand alone, as well as run a lot of data (instead of data from just a handful of species).  
+
+Based on those results, I now have lists of orthogroups that have been gained and lost at each internal node of the tree. Also, all the internal nodes have been named, so they are easier to identify. I'm going to focus on sponges first, and then maybe do some additional nodes to follow up. I want to run all of the sequences in these orthogroups through interproscan to figure out what they are. Then I'll do some GO analysis to see if anything is enriched. This is happening in this directory: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/
+
+The nodes I want to focus on first are all sponge ones:  
+- Homoscleromorpha  
+- Hexactinellida  
+- homo+calc (renamed homo_calc when I'm working with it on premise)  
+- Calcarea  
+- Haplosclerida  
+- Myxospongia  
+- por2  
+- Porifera  
+
+The files that go with these nodes are here: /Users/jenniferlhill/Dropbox/Jenn_R/metazoa_ortho_dollo/all_114_presabs/losses_by_node_tip/  
+
+I can just take one of these files, copy it onto premise, and use it to extract the necessary files from the orthofinder results directory with an old script I wrote to pull out interesting alignments. These are not alignments, but it works the same way on unaligned orthofinder output. The -l is the file that lists the OGs of interest, -a is a path to a directory containing the sequence (or alignment) files, and -n is a new directory in which to place all the right sequence files that match the OGs of interest.  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l Homoscleromorpha.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/Homoscleromorpha_seqs`  
+
+Once I have them all in a directory, I need to make sure there are no asterisks in any of the files, as interproscan will choke and die on them. I wrote a script ages ago that does this. Only argument necessary is the directory from the previous script.    
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/remove_asterisks.py Homoscleromorpha_seqs/`  
+
+I like to go into the directory with all the seq files before I cat them together, to avoid weirdness with the paths, then I cat them together, and then I move it out to the parent directory where everything else is happening.  
+    cd Homoscleromorpha_seqs/  
+    cat *.fa > Homoscleromorpha_all.fa  
+    mv Homoscleromorpha_all.fa ..  
+    cd ..  
+
+And then we can run interproscan.  
+`interproscan -i Homoscleromorpha_all.fa -b Homoscleromorpha_inter -goterms -f TSV`
