@@ -85,31 +85,80 @@ I'll do this in three different groups, with different thresholds for keeping an
 
 Sabrina pulled a dollo parsimony script from another paper that she worked on and got it to stand alone, as well as run a lot of data (instead of data from just a handful of species).  
 
-Based on those results, I now have lists of orthogroups that have been gained and lost at each internal node of the tree. Also, all the internal nodes have been named, so they are easier to identify. I'm going to focus on sponges first, and then maybe do some additional nodes to follow up. I want to run all of the sequences in these orthogroups through interproscan to figure out what they are. Then I'll do some GO analysis to see if anything is enriched. This is happening in this directory: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/
+Based on those results, I now have lists of orthogroups that have been gained and lost at each internal node of the tree. Also, all the internal nodes have been named, so they are easier to identify. I'm going to focus on sponges first, and then maybe do some additional nodes to follow up. I want to run all of the sequences in these orthogroups through interproscan to figure out what they are. Then I'll do some GO analysis to see if anything is enriched. This is happening in this directory: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/. I've also included the number of OGs that were lost at these nodes.  
 
 The nodes I want to focus on first are all sponge ones:  
-- Homoscleromorpha  
-- Hexactinellida  
-- homo+calc (renamed homo_calc when I'm working with it on premise)  
-- Calcarea  
-- Haplosclerida  
-- Myxospongia  
-- por2  
-- Porifera  
+- Homoscleromorpha = 2374  
+- Hexactinellida = 16246  
+- homo+calc (renamed homo_calc when I'm working with it on premise) = 12335  
+- Calcarea = 3635  
+- Haplosclerida = 10724  
+- Myxospongia = 13217  
+- por2 = 2572  
+- Porifera = 2765  
 
 The files that go with these nodes are here: /Users/jenniferlhill/Dropbox/Jenn_R/metazoa_ortho_dollo/all_114_presabs/losses_by_node_tip/  
 
 I can just take one of these files, copy it onto premise, and use it to extract the necessary files from the orthofinder results directory with an old script I wrote to pull out interesting alignments. These are not alignments, but it works the same way on unaligned orthofinder output. The -l is the file that lists the OGs of interest, -a is a path to a directory containing the sequence (or alignment) files, and -n is a new directory in which to place all the right sequence files that match the OGs of interest.  
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l Homoscleromorpha.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/Homoscleromorpha_seqs`  
 
+#### Interproscanning  
+
 Once I have them all in a directory, I need to make sure there are no asterisks in any of the files, as interproscan will choke and die on them. I wrote a script ages ago that does this. Only argument necessary is the directory from the previous script.    
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/remove_asterisks.py Homoscleromorpha_seqs/`  
 
 I like to go into the directory with all the seq files before I cat them together, to avoid weirdness with the paths, then I cat them together, and then I move it out to the parent directory where everything else is happening.  
-    cd Homoscleromorpha_seqs/  
-    cat *.fa > Homoscleromorpha_all.fa  
-    mv Homoscleromorpha_all.fa ..  
-    cd ..  
+
+```bash
+cd Homoscleromorpha_seqs/  
+cat *.fa > ../Homoscleromorpha_all.fa   
+cd ..  
+```
 
 And then we can run interproscan.  
-`interproscan -i Homoscleromorpha_all.fa -b Homoscleromorpha_inter -goterms -f TSV`
+`interproscan -i Homoscleromorpha_all.fa -b Homoscleromorpha_inter -goterms -f TSV`  
+
+*This works great for smaller groups or orthogroups, but can still take forever for larger orthogroups or clades with more losses, so we're putting in another filtering step before we get to the interproscanning bit.*  
+
+I'm going to go into the directory with all the seqs just like above, apply the filter, cat them all together into a new file in the parent directory, and back out.  
+
+```bash  
+cd Homoscleromorpha_seqs/  
+./uclust.sh  
+cat *.fasta > ../Homoscleromorpha_filtered.fa  
+cd ..  
+```  
+
+The contents of `uclust.sh` is below. I'm using an identity of 60% (50% is the lowest you can go and still have the algorithm function properly, and higher values will yield more clusters, which doesn't help us pare down the data very much, plus we have a hugely diverse dataset, so lower numbers make sense), and having it output all it's files with a ".fasta" ending, so they are slightly different from the original files.    
+
+```bash  
+#! /bin/bash  
+for fs in $(ls *fa)  
+do  
+usearch -cluster_fast $fs -id 0.6 -centroids $fs.fasta -uc $fs.uc  
+done  
+```
+
+Now the interproscan line changes but only a little:  
+`interproscan -i Homoscleromorpha_filtered.fa -b Homoscleromorpha_inter -goterms -f TSV`  
+
+
+#### Are the sponges losing things that are sponge-specific in the first place?
+
+If the sponges are losing things that all other animals have, that is one thing. If they are losing things that only other sponges had in the first place, that is kind of a different story. To figure this out, I'm going to do some simple comparisons. (I actually wrote a script to pull out orthogroups that were contained sponges but no other organisms called `clade_specific_ogs`, but then realized that I already have all of the node-specific gains just like I have all the node-specific losses, so I did it as demonstrated below instead.) I uploaded all of the sponge gains files to premise (`scp ~/Dropbox/Jenn_R/metazoa_ortho_dollo/all_114_presabs/gains_by_node/Verongiida.txt jlh1023@premise.sr.unh.edu:/mnt/oldhome/macmaneslab/jlh1023/chap3_2020/interesting_orthos/sponge_gains/`) and grepped out the OG lines into a separate file. The "-h" keeps grep from printing the file name before each match when it is searching multiple files.  
+`grep "OG" -h *.txt >> sponge_specific_ogs.text`  
+
+And now I can do some comparisons to the loss files I've already copied over. The loss files are individual and go in increasing OG number, but the file I just grepped together is mixed up, so I'll sort it first.  
+`sort sponge_gains/sponge_specific_ogs.text > sorted_sponge_specific_ogs.txt`  
+
+I'll do each of the sponge nodes I've got on premise so far (so, the 7 [not counting Porifera] that are listed above), and below I've listed the numbers of sponge-specific OGs that have been lost in each node. I'm popping them into a new directory `/mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/specific_losses/` so that if I make a million of them, they are a bit more organized.    
+`comm -12 Calcarea.txt sorted_sponge_specific_ogs.txt | wc -l`  
+`comm -12 Calcarea.txt sorted_sponge_specific_ogs.txt > specific_losses/Calcarea_lost_sponge_ogs.txt`  
+
+- Homoscleromorpha = 270  
+- Hexactinellida = 1169  
+- homo_calc = 0 (this one will not have a file in the specific_losses directory, because it would be empty)  
+- Calcarea = 943 (fav number ftw!)  
+- Haplosclerida = 700  
+- Myxospongia = 976  
+- por2 = 0 (this one will not have a file in the specific_losses directory, because it would be empty)  
