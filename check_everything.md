@@ -42,5 +42,18 @@ If, in our many transcriptomic datasets included in this study, there are transc
 
 It would be difficult for contamination to look like a loss, but absolutely possible that it could look like a gain, or keep us from detecting a loss at a given node. To make sure this doesn't happen, we are alien indexing each animal dataset in the study, using Joe Ryan's alien indexing program.   
 
-I downloaded a zipped folder of alien indexing from here: https://github.com/josephryan/alien_index. Then I unzipped it and followed the instructions for installing without root privileges. I made a new directory `/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing` made the alien indexing database there. Then I copied all of the datasets to the alien indexing directory also. I kept datasets starting with a-i in that directory, moved ones starting with j-z to another one ("second_group"), moved ones that didn't need to be indexed (outgroups and datasets that are a part of the indexing process) to yet another one ("no_need_to_index"). Finally, I popped all the sponges (except for Amphimedon, which is in the database) into specific sponge directory.   
+I downloaded a zipped folder of alien indexing from here: https://github.com/josephryan/alien_index. Then I unzipped it and followed the instructions for installing without root privileges. I made a new directory `/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing` made the alien indexing database there. Then I copied all of the datasets to the alien indexing directory also. I kept datasets starting with a-i in that directory, moved ones starting with j-z to another one ("second_group"), moved ones that didn't need to be indexed (outgroups and datasets that are a part of the indexing process) to yet another one ("no_need_to_index"). Finally, I popped all the sponges (except for Amphimedon, which is in the database) into specific sponge directory. I did the indexing in various batches, so that I could have multiple jobs running on multiple nodes at the same time, but they all followed the pattern below.     
 ```bash  
+for fs in $(ls *fa)
+do
+blastp -query $fs -db ai_db_all.fa -outfmt 6 -seg yes -evalue 0.001 -out $fs.blast
+done
+```  
+
+Similarly, that basic loop is also how I will do the next step of the process, when I go through and identify all the alien sequences.  
+```bash  
+for blst in $(ls *blast)  
+do  
+alien_index --blast=$blst --alien_pattern=ALIEN_ > $blst.alien_index  
+done  
+```  
