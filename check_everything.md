@@ -46,7 +46,8 @@ I downloaded a zipped folder of alien indexing from here: https://github.com/jos
 ```bash  
 for fs in $(ls *fa)
 do
-blastp -query $fs -db ai_db_all.fa -outfmt 6 -seg yes -evalue 0.001 -out $fs.blast
+echo "now working on $fs"
+blastp -query $fs -db ai_db_all -outfmt 6 -seg yes -evalue 0.001 -out $fs.blast
 done
 ```  
 
@@ -57,3 +58,16 @@ do
 alien_index --blast=$blst --alien_pattern=ALIEN_ > $blst.alien_index  
 done  
 ```  
+
+I've now (2-18-21) done this for all of the sponges, and am just waiting for all of the other organisms to run (minus the ones that were included in the database and the outgroups). Meanwhile, I want to figure out how to pull out the names of orthogroups that contain these sequences. Then I will be able to compare them with the orthogroups that are present/absent or gained/lost at each node, and see if these results are being affected by aliens. Again, it is more likely that contamination would look like a gain or like a presence where there really isn't one.  
+
+I wrote a script (/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py) that accepts a list of sequences (Genus_species_number, in this case), and pulls out the names of the OGs that contain those seqs. It also produces a tab-delimited file containing the number of alien seqs each OG contains.
+
+I need to give it a text file that is a list of all the alien sequences in a particular dataset (-l argument), and I can get that like this:  
+`cut -f 1 Aphrocallistes_vastus.blast.alien_index | grep -v "ID" > Aphrocallistes_vastus_alienseqs.txt`  
+
+Then I need a path to a directory containing fasta files of orthogroups (-d argument). For sponges, I will use a directory of all the orthogroups they might possibly have (the same one I am running through interproscan to use as a "gene universe" for GO term analysis). This consists of the OGs from a number of files from the Dollo parsimony R script: presences at Metazoa, gains at sponge+rest, gains at the ancestral sponge node, gains at each internal sponge node. These all exist in separate lists and directories, but I will combine them before running this script. Any that are still in list form (have not had corresponding fasta files pulled from the orthofinder results), I can grab using my pull_alignments.py script (don't worry about the name, it's more versatile than that).
+
+The last two arguments (-o, and -c) are for output files: -o for a file that has each alien sequence and the orthogroup it belongs to (if any), and -c for a file that has each orthogroup that contains alien sequences and how many it contains.  
+
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py -l   
