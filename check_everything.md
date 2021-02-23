@@ -80,4 +80,4 @@ This script works great, but takes a while to run (unsurprising, considering the
 
 
 **More updates:** This is great info to have, but I also just want a simple script that will remove problematic sequences from the interproscan results (obviously all of this is really meant to be done at the beginning of a study before you run a lot of the analyses, but it just doensn't always go down that way). So I wrote one here: `#/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py` that takes a list of alien (or otherwise problematic) sequence names and an interproscan output tsv file and outputs a new tsv file without all of the results from the sequences named in the list.  
-`#/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a test_aliens.txt -t test.tsv -o test_done.tsv`  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a test_aliens.txt -t test.tsv -o test_done.tsv`  
