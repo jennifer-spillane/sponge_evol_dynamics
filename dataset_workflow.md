@@ -143,17 +143,70 @@ Now the interproscan line changes but only a little:
 `interproscan -i Homoscleromorpha_filtered.fa -b Homoscleromorpha_inter -goterms -f TSV`  
 
 
+
+**Update again:**   
+This works great for the majority of clades, but I need to interproscan all of the orthogroups that are present at the ancestral Metazoa node, and it is a lot. It is either erroring on premise right now, or going so slowly that it might as well be, so instead of the standard approach that i've done for all the other clades above, I'm splitting up the OGs at this node and running them as different interproscan jobs so that they might actually finish. This means that everything will look exactly the same, except when I'm catting all the fastas together, I'll just cat some of them together. So I'll have five files total, instead of just one for this particular node. The commands to get the first two are shown below.  
+`cat *0.fa.fasta *1.fa.fasta >> ../met1_filtered.fa`  
+`cat *2.fa.fasta *3.fa.fasta >> ../met2_filtered.fa`  
+
+
+
 #### GO term analysis on the interproscan results  
 
 Over the weekend all of the interproscan jobs finished (except Hexactinellida, which ran out of memory - I've submitted it with more so fingers crossed it finishes this time), so now I'm going to move on to the next step, which is gene ontology (GO) analysis. I'm going to do it the same way I did for the transcriptome quality paper, in topGO in R.  
 
 I need some kind of "gene universe" to compare the sponge losses to, so I'm going to use all of the OGs present at the Metazoa node, as well as the OGs that sponges have gained at various nodes in their tree. This should work, as that should be everything (or nearly everything) that they've lost, so the losses will be a subset of the total OGs for which I have GO terms. Did I need to interproscan all those sponge node losses? Possibly not. I'm going to try this approach first and see how it works.  
 
-I'm using the same procedure as above to get to the interproscanning step, I'm just doing it for Metazoa presences (input to interproscan is "Metazoa_present_filtered.fa", output is "Metazoa_present_inter.tsv"), and sponge gains (input into interproscan is "sponge_specific_filtered.fa", output is "sponge_specific_inter.tsv").  
+I'm using the same procedure as above to get to the interproscanning step, I'm just doing it for Metazoa presences (input to interproscan is "Metazoa_present_filtered.fa", output is "Metazoa_present_inter.tsv" *Now these are 1-5*), sponge gains (input into interproscan is "sponge_specific_filtered.fa", output is "sponge_specific_inter.tsv"), and the node in between, labeled as "sponge+rest" in the R output files (input into interproscan is "sponge_rest_filtered.fa", output is "sponge_rest_inter.tsv").  
 
-First, I use a simple cut command to pull out the columns I want:  
-`cut -f 1,14 Homoscleromorpha_inter.tsv > Homoscleromorpha_goterms.tsv`  
+First, I'm catting all of the tsv files that I will use in the gene universe together. Command below.  
+`cat Metazoa_present_inter1.tsv Metazoa_present_inter2.tsv Metazoa_present_inter3.tsv Metazoa_present_inter4.tsv Metazoa_present_inter5.tsv sponge_rest_inter.tsv sponge_specific_inter.tsv > gene_universe_raw.tsv`  
 
+Now I want to filter out the sequences that could be alien sequences using a script I wrote for this purpose. It will weed out any sequences whose names are in a list, so I can use it for the operons too. First, I need a list of all the alien sequences that were found in sponges, and a list of each putative operon sequence found in sponges. I'll save each file as I do each step, in case I want to go back to one.  
+```bash
+#From /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/sponge_indexing/
+cat *alienseqs.txt >> all_sponge_aliens.txt
+
+#From /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/sponge_indexing/all_sponge_aliens.txt -t gene_universe_raw.tsv -o gene_universe_no_aliens.tsv
+
+#From /mnt/lustre/macmaneslab/jlh1023/chap3_2020/operons/sponge_pep_operons/
+cat *operons.txt >> all_sponge_operons.txt
+
+#From /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a /mnt/lustre/macmaneslab/jlh1023/chap3_2020/operons/sponge_pep_operons/all_sponge_operons.txt -t gene_universe_no_aliens.tsv -o gene_universe_no_ops_aliens.tsv
+```  
+
+How much the file decreased through these filtering steps:  
+- gene_universe_raw.tsv = 12126445  
+- gene_universe_no_aliens.tsv = 11959436  
+- gene_universe_no_ops_aliens.tsv = 11782979  
+
+
+Now I can pull out just the things I will need to run these data through topGO. I use a simple cut command to pull out the columns I want.    
+`cut -f 1,14 gene_universe_no_ops_aliens.tsv > gene_universe_no_ops_aliens_goterms.tsv`  
+
+
+**Update:** This is overall a good plan, but I am going to modify it to do the actual GO analysis. I want more specialized gene universes to use in the analysis, because I don't want them to be skewed by the fact that they contain genes that that particular clade could not have. So now the strategy is to use all of the Metazoa presences, the gains at sponge+rest and Porifera, and then to tailor the rest of the gains that I include to the node in question. I will list these below. "Metazoa" always refers to presences, but all of the others refer to gains at that node.    
+- Homoscleromorpha: Metazoa, sponge_rest, Porifera, homo_calc, Homoscleromorpha   
+- Hexactinellida: Metazoa, sponge_rest, Porifera, por2, Hexactinellida    
+- homo_calc: Metazoa, sponge_rest, Porifera, homo_calc  
+- Calcarea: Metazoa, sponge_rest, Porifera, homo_calc, Calcarea  
+- Haplosclerida: Metazoa, sponge_rest, Porifera, por2, Demospongiidae, Heteroscleromorpha, Haploscerida  
+- Myxospongia: Metazoa, sponge_rest, Porifera, por2, Demospongiidae, Myxospongia    
+- por2: Metazoa, sponge_rest, Porifera, por2  
+- Porifera: Metazoa, sponge_rest, Porifera   
+
+Since I did not interproscan these all separately, I will need to pull out the appropriate sequences from the output. I wrote a script that filters out sequences from interproscan results, so I'm converting it into a new one that will do the opposite - keep those sequences that are in a list provided to it. I'm going to start with Porifera, since I'll need it for all the others and it is the most fundamental, but all the others will be done the same way.    
+
+To pull these out, I'm going to start the same way that I did when I was interproscanning, and use the `pull_alignments.py` script. This will give me a directory with all of the othrogroup file in it. These fasta files contain all the sequences in that orthogroup. I will need to cat these sequences together, pull out just the sequence names, and remove the ">" symbol from the front so that they are just a list of sequence names.  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l sponge_gains/Porifera.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/Porifera_gain_seqs/`  
+`grep -h ">" Porifera_gain_seqs/*fa | sed 's_>__' > Porifera_gain_seq_names.txt`  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Porifera_gain_seq_names.txt -t sponge_specific_inter.tsv -o Porifera_gain_inter.tsv`  
+
+Now, I can combine this interproscan results file (the pruned down one I just made) with the ones from Metazoa and sponge_rest, and filter it to get rid of alien sequences. Then the filtered file will be the gene universe I need for testing the gene enrichment for the Porifera gains and losses.  
+`cat Metazoa_present_inter1.tsv Metazoa_present_inter2.tsv Metazoa_present_inter3.tsv Metazoa_present_inter4.tsv Metazoa_present_inter5.tsv sponge_rest_inter.tsv Porifera_gain_inter.tsv > gene_universe_Porifera_raw.tsv`  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/sponge_indexing/all_sponge_aliens.txt -t gene_universe_Porifera_raw.tsv -o gene_universe_Porifera_no_aliens.tsv`
 
 
 
