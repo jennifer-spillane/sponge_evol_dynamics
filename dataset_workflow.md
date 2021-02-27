@@ -206,7 +206,189 @@ To pull these out, I'm going to start the same way that I did when I was interpr
 
 Now, I can combine this interproscan results file (the pruned down one I just made) with the ones from Metazoa and sponge_rest, and filter it to get rid of alien sequences. Then the filtered file will be the gene universe I need for testing the gene enrichment for the Porifera gains and losses.  
 `cat Metazoa_present_inter1.tsv Metazoa_present_inter2.tsv Metazoa_present_inter3.tsv Metazoa_present_inter4.tsv Metazoa_present_inter5.tsv sponge_rest_inter.tsv Porifera_gain_inter.tsv > gene_universe_Porifera_raw.tsv`  
-`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/sponge_indexing/all_sponge_aliens.txt -t gene_universe_Porifera_raw.tsv -o gene_universe_Porifera_no_aliens.tsv`
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/sponge_indexing/all_sponge_aliens.txt -t gene_universe_Porifera_raw.tsv -o gene_universe_Porifera_no_aliens.tsv`  
+`cut -f 1,14 gene_universe_Porifera_no_aliens.tsv > gene_universe_Porifera_goterms.tsv`
+
+### Fair warning: disorganization to follow.  
+
+**I need to plunk all of this down so that I don't get confused or forget, and I will add in annotations on Monday after I've turned in my draft.**  
+
+Ok, the Porifera_gain_inter.tsv is a file that contains a the interproscan results from a filtered set of sequences. These sequences were formerly combined with sequences from all other internal sponge nodes also. That was how they were filtered and run through interproscan. I need the filtered set of sequence names from each node individually. So to make sure everything lines up, I need to follow these steps:  
+1. get orthogroup names from the original files from R  
+2. get sequence names for all sequences in those orthogroups  
+3. use sequence names to prune interproscan results (for the sponge_specific OGs) so that they contain only results that correspond with that node - will only have to do this once per gene universe, and then it can be used for both gains and losses   
+4. use pruned interproscan results to filter the sequence names so that they contain only the sequences that made it through the filtering process that came before interproscan (make sure the interproscan results have had aliens removed before this step, because if it happens after, they still won't match up)  
+
+
+Right now, all of the topGO input files will have sponge aliens removed, but no other aliens until the rest of the indexing finishes.  
+
+
+#### Gains at the Porifera node  
+Description: Analysis of gains at the Porifera node
+Ontology: BP
+'weight01' algorithm with the 'fisher' test
+1035 GO terms scored: 5 terms with p < 0.01
+Annotation data:
+    Annotated genes: 115696
+    Significant genes: 274
+    Min. no. of genes annotated to a GO: 1
+    Nontrivial nodes: 106  
+
+    GO.ID                                        Term Annotated Significant Expected classicFisher
+1  GO:0070836                            caveola assembly       117          14     0.28       2.9e-30  
+2  GO:0042981             regulation of apoptotic process       666          13     1.58       1.0e-17  
+3  GO:0006464       cellular protein modification process       929           9     2.20       7.2e-10  
+4  GO:0009116                nucleoside metabolic process       201           5     0.48       5.4e-08  
+5  GO:0007160                        cell-matrix adhesion       268           3     0.63       0.00031  
+6  GO:0000272            polysaccharide catabolic process        25           1     0.06       0.01203
+7  GO:0007165                         signal transduction      3134           5     7.42       0.01773
+8  GO:0006355 regulation of transcription, DNA-templat...       470           2     1.11       0.02195
+9  GO:0043248                         proteasome assembly       199           1     0.47       0.09192
+10 GO:0055085                     transmembrane transport       331           1     0.78       0.14827
+11 GO:0055114                 oxidation-reduction process       571           1     1.35       0.24204
+12 GO:0015074                             DNA integration      1115           1     2.64       0.41867
+13 GO:1901564 organonitrogen compound metabolic proces...      2142          14     5.07       1.00000
+14 GO:0044281            small molecule metabolic process       538           5     1.27       1.00000
+15 GO:0043412                  macromolecule modification       946           9     2.24       1.00000
+16 GO:0016070                       RNA metabolic process      1491           2     3.53       1.00000
+17 GO:0050896                        response to stimulus      3449           5     8.17       1.00000
+18 GO:0006351                transcription, DNA-templated       813           2     1.93       1.00000
+19 GO:0009056                           catabolic process       448           1     1.06       1.00000
+20 GO:0060255 regulation of macromolecule metabolic pr...       680           2     1.61       1.00000
+
+#### Losses at the Porifera node  
+Description: Analysis of loss at the Porifera node
+Ontology: BP
+'weight01' algorithm with the 'fisher' test
+1035 GO terms scored: 5 terms with p < 0.01
+Annotation data:
+    Annotated genes: 115696
+    Significant genes: 274
+    Min. no. of genes annotated to a GO: 1
+    Nontrivial nodes: 106
+
+    GO.ID                                        Term Annotated Significant Expected classicFisher
+1  GO:0070836                            caveola assembly       117          14     0.28       2.9e-30
+2  GO:0042981             regulation of apoptotic process       666          13     1.58       1.0e-17
+3  GO:0006464       cellular protein modification process       929           9     2.20       7.2e-10
+4  GO:0009116                nucleoside metabolic process       201           5     0.48       5.4e-08
+5  GO:0007160                        cell-matrix adhesion       268           3     0.63       0.00031
+6  GO:0000272            polysaccharide catabolic process        25           1     0.06       0.01203
+7  GO:0007165                         signal transduction      3134           5     7.42       0.01773
+8  GO:0006355 regulation of transcription, DNA-templat...       470           2     1.11       0.02195
+9  GO:0043248                         proteasome assembly       199           1     0.47       0.09192
+10 GO:0055085                     transmembrane transport       331           1     0.78       0.14827
+11 GO:0055114                 oxidation-reduction process       571           1     1.35       0.24204
+12 GO:0015074                             DNA integration      1115           1     2.64       0.41867
+13 GO:1901564 organonitrogen compound metabolic proces...      2142          14     5.07       1.00000
+14 GO:0044281            small molecule metabolic process       538           5     1.27       1.00000
+15 GO:0043412                  macromolecule modification       946           9     2.24       1.00000
+16 GO:0016070                       RNA metabolic process      1491           2     3.53       1.00000
+17 GO:0050896                        response to stimulus      3449           5     8.17       1.00000
+18 GO:0006351                transcription, DNA-templated       813           2     1.93       1.00000
+19 GO:0009056                           catabolic process       448           1     1.06       1.00000
+20 GO:0060255 regulation of macromolecule metabolic pr...       680           2     1.61       1.00000
+
+#### Gains at the Ctenophora node  
+Description: Analysis of gains at the Cteno node
+Ontology: BP
+'weight01' algorithm with the 'fisher' test
+998 GO terms scored: 6 terms with p < 0.01
+Annotation data:
+    Annotated genes: 106161
+    Significant genes: 122
+    Min. no. of genes annotated to a GO: 1
+    Nontrivial nodes: 113
+
+    GO.ID                                        Term Annotated Significant Expected classicFisher
+1  GO:0042981             regulation of apoptotic process       149           6     0.17       5.1e-13
+2  GO:0051260                 protein homooligomerization       196           4     0.23       8.0e-08
+3  GO:0035556           intracellular signal transduction      1291           5     1.48       5.9e-06
+4  GO:0006275               regulation of DNA replication         1           1     0.00       0.00021
+5  GO:0019064 fusion of virus membrane with host plasm...         1           1     0.00       0.00021
+6  GO:0060964       regulation of gene silencing by miRNA        27           1     0.03       0.00558
+7  GO:0043087               regulation of GTPase activity       103           1     0.12       0.02113
+8  GO:0070072 vacuolar proton-transporting V-type ATPa...       106           1     0.12       0.02174
+9  GO:0006355 regulation of transcription, DNA-templat...       451           1     0.52       0.08942
+10 GO:0007165                         signal transduction      3081           6     3.54       0.25375
+11 GO:0010629      negative regulation of gene expression       141           1     0.16       1.00000
+12 GO:0051052         regulation of DNA metabolic process         1           1     0.00       1.00000
+13 GO:0044403                            symbiont process        30           1     0.03       1.00000
+14 GO:0050896                        response to stimulus      3376           6     3.88       1.00000
+15 GO:0016070                       RNA metabolic process      1457           1     1.67       1.00000
+16 GO:0006351                transcription, DNA-templated       793           1     0.91       1.00000
+17 GO:0060255 regulation of macromolecule metabolic pr...       651           3     0.75       1.00000
+18 GO:0006259                       DNA metabolic process      1188           1     1.37       1.00000
+19 GO:0043933 protein-containing complex subunit organ...       711           5     0.82       1.00000
+20 GO:0009058                        biosynthetic process      1818           2     2.09       1.00000
+
+#### Losses at the Ctenophora node  
+Description: Analysis of losses at the Cteno node
+Ontology: BP
+'weight01' algorithm with the 'fisher' test
+998 GO terms scored: 54 terms with p < 0.01
+Annotation data:
+    Annotated genes: 106161
+    Significant genes: 10044
+    Min. no. of genes annotated to a GO: 1
+    Nontrivial nodes: 530
+
+    GO.ID                                        Term Annotated Significant Expected classicFisher
+1  GO:0006629                     lipid metabolic process      1065         204   100.76       < 1e-30
+2  GO:0000160     phosphorelay signal transduction system        70          68     6.62       < 1e-30
+3  GO:0006807         nitrogen compound metabolic process      4794         409   453.57       < 1e-30
+4  GO:0070072 vacuolar proton-transporting V-type ATPa...       106          69    10.03       < 1e-30
+5  GO:0035556           intracellular signal transduction      1291         207   122.14       < 1e-30
+6  GO:0007165                         signal transduction      3081         359   291.50       < 1e-30
+7  GO:0019915                               lipid storage        42          42     3.97       < 1e-30
+8  GO:0006413                    translational initiation        42          42     3.97       < 1e-30
+9  GO:0006450        regulation of translational fidelity        40          40     3.78       < 1e-30
+10 GO:0071816 tail-anchored membrane protein insertion...        38          36     3.60       < 1e-30
+11 GO:0051126     negative regulation of actin nucleation        28          28     2.65       < 1e-30
+12 GO:0055114                 oxidation-reduction process       558          73    52.79       < 1e-30
+13 GO:0015074                             DNA integration       829          82    78.43       < 1e-30
+14 GO:0000272            polysaccharide catabolic process        24          22     2.27       < 1e-30
+15 GO:0006412                                 translation       143          77    13.53       < 1e-30
+16 GO:0044528 regulation of mitochondrial mRNA stabili...        18          17     1.70       1.4e-30
+17 GO:0070836                            caveola assembly        14          14     1.32       2.4e-26
+18 GO:0007009                plasma membrane organization        61          35     5.77       2.6e-26
+19 GO:0042981             regulation of apoptotic process       149          31    14.10       2.9e-26
+20 GO:0006284                        base-excision repair        63          22     5.96       1.5e-24
+
+
+
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/sponge_indexing/all_sponge_aliens.txt -t gene_universe_Ctenophora_raw.tsv -o gene_universe_Ctenophora_noaliens.tsv
+cut -f 1,14 gene_universe_Ctenophora_noaliens.tsv > gene_universe_Ctenophora_goterms.tsv
+cut -f 1 gene_universe_Ctenophora_noaliens.tsv | sort > sorted_gene_universe_Ctenophora_seqnames.txt
+
+
+
+
+
+### Results when sponges branch first  
+
+copy over Ctenophora_gain_inter.tsv, Metazoa_present_all_inter.tsv, Porifera_gain_inter.tsv
+interproscan cteno_rest, as above  
+cat Metazoa_present_all_inter.tsv cteno_rest_inter.tsv Ctenophora_gain_inter.tsv > gene_universe_Ctenophora_raw.tsv  
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/sponge_indexing/all_sponge_aliens.txt -t gene_universe_Ctenophora_raw.tsv -o gene_universe_Ctenophora_noaliens.tsv
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/sponge_indexing/all_sponge_aliens.txt -t gene_universe_Porifera_inter_raw.tsv -o gene_universe_Porifera_noaliens.tsv
+cut -f 1,14 gene_universe_Ctenophora_noaliens.tsv > gene_universe_Ctenophora_goterms.tsv
+cut -f 1 gene_universe_Ctenophora_noaliens.tsv | sort > sorted_gene_universe_Ctenophora_seqnames.txt
+cut -f 1,14 gene_universe_Porifera_noaliens.tsv > gene_universe_Porifera_goterms.tsv
+cut -f 1 gene_universe_Porifera_noaliens.tsv | sort > sorted_gene_universe_Porifera_seqnames.txt
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l Ctenophora_loss.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n Ctenophora_loss_seqs/
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l Porifera_loss.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n Porifera_loss_seqs/
+grep -h ">" Ctenophora_loss_seqs/*.fa | sed 's_>__' | sort > sorted_Ctenophora_loss_seqnames_raw.txt
+comm -12 sorted_gene_universe_Ctenophora_seqnames.txt sorted_Ctenophora_loss_seqnames_raw.txt > Ctenophora_loss_filtered_seqnames.txt
+grep -h ">" Porifera_loss_seqs/*.fa | sed 's_>__' | sort > sorted_Porifera_loss_seqnames_raw.txt
+comm -12 sorted_gene_universe_Porifera_seqnames.txt sorted_Porifera_loss_seqnames_raw.txt > Porifera_loss_filtered_seqnames.txt
+cut -f 1 Ctenophora_gain_inter.tsv > Ctenophora_gain_inter_seqnames.txt
+cut -f 1 Porifera_gain_inter.tsv > Porifera_gain_inter_seqnames.txt
+
+
+
+
+
 
 
 
