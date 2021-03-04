@@ -549,7 +549,26 @@ Annotation data:
 2  GO:0016020                                    membrane     15188         301   158.22       2.5e-17  
 
 *Molecular function*  
+Description: Analysis of gains at the Cteno node
+Ontology: MF
+'weight01' algorithm with the 'fisher' test
+573 GO terms scored: 27 terms with p < 0.01
+Annotation data:
+    Annotated genes: 1507423
+    Significant genes: 3434
+    Min. no. of genes annotated to a GO: 1
+    Nontrivial nodes: 96  
 
+    GO.ID                                        Term Annotated Significant Expected classicFisher
+1  GO:0005515                             protein binding     59949         260   136.57       < 1e-30
+2  GO:0005509                         calcium ion binding      4367          35     9.95       < 1e-30
+3  GO:0003676                        nucleic acid binding     14298          37    32.57       1.3e-12
+4  GO:0046983               protein dimerization activity      3034          10     6.91       2.0e-08
+5  GO:0022857          transmembrane transporter activity      1234           7     2.81       7.5e-08
+6  GO:0016409               palmitoyltransferase activity       443           5     1.01       2.0e-07
+7  GO:0003824                          catalytic activity     24210          44    55.15       4.0e-07
+8  GO:0003677                                 DNA binding      4694          15    10.69       4.1e-07
+9  GO:0003735          structural constituent of ribosome        58           3     0.13       6.4e-07  
 
 
 #### Ctenophora losses  
@@ -603,3 +622,141 @@ Annotation data:
 36 GO:0006355 regulation of transcription, DNA-templat...       451          27    41.35       9.6e-10
 37 GO:0019428              allantoin biosynthetic process         4           4     0.37       4.4e-08
 38 GO:0000105              histidine biosynthetic process         4           4     0.37       4.4e-08  
+
+*Cellular component*  
+Description: Analysis of losses at the Cteno node
+Ontology: CC
+'weight01' algorithm with the 'fisher' test
+237 GO terms scored: 23 terms with p < 0.01
+Annotation data:
+    Annotated genes: 142451
+    Significant genes: 6234
+    Min. no. of genes annotated to a GO: 1
+    Nontrivial nodes: 128  
+
+    GO.ID                                        Term Annotated Significant Expected classicFisher
+1  GO:0016021              integral component of membrane     10347        1098   452.81       < 1e-30
+2  GO:0016020                                    membrane     15188        1453   664.66       < 1e-30
+3  GO:0005761                      mitochondrial ribosome        59          58     2.58       < 1e-30
+4  GO:0000813                             ESCRT I complex        37          36     1.62       < 1e-30
+5  GO:0016592                            mediator complex       162          54     7.09       < 1e-30
+6  GO:0031966                      mitochondrial membrane       235          50    10.28       < 1e-30
+7  GO:0005576                        extracellular region       339          69    14.84       < 1e-30
+8  GO:0005753 mitochondrial proton-transporting ATP sy...        18          18     0.79       < 1e-30
+9  GO:0034719                      SMN-Sm protein complex        18          18     0.79       < 1e-30
+10 GO:0008023     transcription elongation factor complex        14          14     0.61       1.8e-27
+11 GO:0005634                                     nucleus       945         125    41.36       1.1e-25
+12 GO:0031011                               Ino80 complex        13          13     0.57       1.5e-25
+13 GO:0005615                         extracellular space        95          19     4.16       9.4e-18
+14 GO:0016010 dystrophin-associated glycoprotein compl...         8           8     0.35       5.3e-16
+15 GO:0005886                             plasma membrane       137          15     6.00       2.3e-08  
+
+*Molecular function*  
+Description: Analysis of losses at the Cteno node
+Ontology: MF
+'weight01' algorithm with the 'fisher' test
+573 GO terms scored: 122 terms with p < 0.01
+Annotation data:
+    Annotated genes: 1507423
+    Significant genes: 192721
+    Min. no. of genes annotated to a GO: 1
+    Nontrivial nodes: 356  
+
+    GO.ID                                        Term Annotated Significant Expected classicFisher
+1   GO:0016787                          hydrolase activity      7070        1538   903.89       < 1e-30
+2   GO:0016491                     oxidoreductase activity      1191         412   152.27       < 1e-30
+3   GO:0005515                             protein binding     59949        8435  7664.36       < 1e-30
+4   GO:0008168                  methyltransferase activity      1333         589   170.42       < 1e-30
+5   GO:0003824                          catalytic activity     24210        5819  3095.20       < 1e-30
+6   GO:0016757 transferase activity, transferring glyco...      1432         354   183.08       < 1e-30
+7   GO:0022857          transmembrane transporter activity      1234         329   157.76       < 1e-30
+8   GO:0008146                   sulfotransferase activity       999         264   127.72       < 1e-30
+9   GO:0003697                 single-stranded DNA binding       131         125    16.75       < 1e-30
+10  GO:0016791                        phosphatase activity       348         201    44.49       < 1e-30
+11  GO:0016772 transferase activity, transferring phosp...      1201         214   153.55       < 1e-30
+12  GO:0003676                        nucleic acid binding     14298        1009  1827.97       < 1e-30
+13  GO:0008080                N-acetyltransferase activity       466         150    59.58       < 1e-30
+14  GO:0008757 S-adenosylmethionine-dependent methyltra...       173         127    22.12       < 1e-30
+15  GO:0051537            2 iron, 2 sulfur cluster binding       121          95    15.47       < 1e-30
+16  GO:0008270                            zinc ion binding      2828         276   361.55       < 1e-30
+17  GO:0016747 transferase activity, transferring acyl ...      1712         427   218.88       < 1e-30
+18  GO:0016810 hydrolase activity, acting on carbon-nit...       277         110    35.41       < 1e-30
+19  GO:0005509                         calcium ion binding      4367         321   558.31       < 1e-30
+20  GO:0005524                                 ATP binding      2232         233   285.36       < 1e-30
+21  GO:0004144 diacylglycerol O-acyltransferase activit...        64          64     8.18       < 1e-30
+22  GO:0005525                                 GTP binding      1230         170   157.25       < 1e-30
+23  GO:0008171                O-methyltransferase activity       112          71    14.32       < 1e-30
+24  GO:0004064                       arylesterase activity        54          54     6.90       < 1e-30
+25  GO:0003735          structural constituent of ribosome        58          55     7.42       < 1e-30
+26  GO:0017176 phosphatidylinositol N-acetylglucosaminy...        52          52     6.65       < 1e-30
+27  GO:0008374                  O-acyltransferase activity       114         114    14.57       < 1e-30
+28  GO:0035091                phosphatidylinositol binding      1008         134   128.87       < 1e-30
+29  GO:0008484           sulfuric ester hydrolase activity       441         122    56.38       < 1e-30
+30  GO:0046872                           metal ion binding      8799         777  1124.93       < 1e-30
+31  GO:0050660         flavin adenine dinucleotide binding       237         116    30.30       < 1e-30
+32  GO:0003953                  NAD+ nucleosidase activity        42          42     5.37       < 1e-30
+33  GO:0016788 hydrolase activity, acting on ester bond...      2310         557   295.33       < 1e-30
+34  GO:0071949                                 FAD binding       141          57    18.03       < 1e-30
+35  GO:0070567               cytidylyltransferase activity        47          41     6.01       < 1e-30
+36  GO:0003677                                 DNA binding      4694         356   600.12       < 1e-30
+37  GO:0020037                                heme binding       335          72    42.83       < 1e-30
+38  GO:0003723                                 RNA binding      1604         141   205.07       < 1e-30
+39  GO:0004869 cysteine-type endopeptidase inhibitor ac...       130          52    16.62       < 1e-30
+40  GO:0016884 carbon-nitrogen ligase activity, with gl...        33          33     4.22       < 1e-30
+41  GO:0004129               cytochrome-c oxidase activity       154          54    19.69       < 1e-30
+42  GO:0003993                   acid phosphatase activity        32          32     4.09       < 1e-30
+43  GO:0004842      ubiquitin-protein transferase activity       478          77    61.11       < 1e-30
+44  GO:0002161             aminoacyl-tRNA editing activity        34          32     4.35       < 1e-30
+45  GO:0004423              iduronate-2-sulfatase activity        26          26     3.32       < 1e-30
+46  GO:0016798 hydrolase activity, acting on glycosyl b...       200         116    25.57       < 1e-30
+47  GO:0045145 single-stranded DNA 5'-3' exodeoxyribonu...        25          25     3.20       < 1e-30
+48  GO:0004553 hydrolase activity, hydrolyzing O-glycos...        48          33     6.14       < 1e-30
+49  GO:0030246                        carbohydrate binding       469          75    59.96       < 1e-30
+50  GO:0008773 [protein-PII] uridylyltransferase activi...        24          24     3.07       < 1e-30
+51  GO:0010181                                 FMN binding        88          35    11.25       < 1e-30
+52  GO:0008237                   metallopeptidase activity       792          84   101.26       < 1e-30
+53  GO:0015035 protein disulfide oxidoreductase activit...        49          28     6.26       < 1e-30
+54  GO:0043531                                 ADP binding        23          21     2.94       < 1e-30
+55  GO:0003847 1-alkyl-2-acetylglycerophosphocholine es...        19          19     2.43       < 1e-30
+56  GO:0008289                               lipid binding      1660         193   212.23       < 1e-30
+57  GO:0008233                          peptidase activity      1257         129   160.70       < 1e-30
+58  GO:0017022                              myosin binding        16          16     2.05       < 1e-30
+59  GO:0004867 serine-type endopeptidase inhibitor acti...       749          61    95.76       < 1e-30
+60  GO:0004346              glucose-6-phosphatase activity        15          15     1.92       1.1e-29
+61  GO:0016746 transferase activity, transferring acyl ...      2313         490   295.71       5.2e-29
+62  GO:0005507                          copper ion binding       103          27    13.17       1.5e-28
+63  GO:0008119     thiopurine S-methyltransferase activity        14          14     1.79       9.2e-28
+64  GO:0004055         argininosuccinate synthase activity        14          14     1.79       9.2e-28
+65  GO:0016279 protein-lysine N-methyltransferase activ...        40          16     5.11       7.9e-26
+66  GO:0016874                             ligase activity       362          79    46.28       8.1e-25
+67  GO:0043022                            ribosome binding        42          18     5.37       4.7e-24
+68  GO:0051539            4 iron, 4 sulfur cluster binding        23          15     2.94       4.9e-24
+69  GO:0035438                       cyclic-di-GMP binding        12          12     1.53       6.7e-24
+70  GO:0051536                 iron-sulfur cluster binding       163         124    20.84       9.3e-24
+71  GO:0016829                              lyase activity       302          53    38.61       1.2e-21
+72  GO:0016765 transferase activity, transferring alkyl...       243          32    31.07       7.1e-21
+73  GO:0016783                  sulfurtransferase activity        21          17     2.68       4.9e-20
+74  GO:0005085 guanyl-nucleotide exchange factor activi...       809          48   103.43       2.3e-19
+75  GO:0003950        NAD+ ADP-ribosyltransferase activity       353          32    45.13       1.2e-18
+76  GO:0016763 transferase activity, transferring pento...       400          49    51.14       2.6e-18
+77  GO:2001070                              starch binding        24          11     3.07       1.2e-15
+78  GO:0016836                        hydro-lyase activity        85          15    10.87       2.9e-15
+79  GO:0030414                peptidase inhibitor activity      1154         130   147.54       2.9e-15
+80  GO:0004843 thiol-dependent ubiquitin-specific prote...        70          15     8.95       4.3e-15
+81  GO:0046912 transferase activity, transferring acyl ...        33          12     4.22       5.9e-14
+82  GO:0004518                           nuclease activity       296          42    37.84       1.7e-13
+83  GO:0008658                          penicillin binding         8           7     1.02       2.4e-13
+84  GO:0004222               metalloendopeptidase activity        66          13     8.44       9.0e-13
+85  GO:0043565               sequence-specific DNA binding       130          16    16.62       4.4e-12
+86  GO:0004792      thiosulfate sulfurtransferase activity        11           7     1.41       9.6e-12
+87  GO:0004857                   enzyme inhibitor activity      1208         141   154.44       3.2e-11
+88  GO:0000049                                tRNA binding        55          11     7.03       4.3e-11
+89  GO:0043169                              cation binding      8873         792  1134.40       1.1e-10
+90  GO:0016743 carboxyl- or carbamoyltransferase activi...         5           5     0.64       2.2e-10
+91  GO:0003714          transcription corepressor activity         5           5     0.64       2.2e-10
+92  GO:0005096                   GTPase activator activity       304          20    38.87       9.8e-10
+93  GO:0016831                      carboxy-lyase activity        38          11     4.86       6.3e-09
+94  GO:0046982         protein heterodimerization activity       525          25    67.12       6.8e-09
+95  GO:0003855       3-dehydroquinate dehydratase activity         4           4     0.51       1.9e-08
+96  GO:0005212          structural constituent of eye lens         4           4     0.51       1.9e-08
+97  GO:0019239                          deaminase activity       104          11    13.30       4.7e-08  
