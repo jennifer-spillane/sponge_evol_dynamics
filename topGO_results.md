@@ -421,15 +421,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Biological process*  
 
-Description: Analysis of gains at the Porifera node
-Ontology: BP
-'weight01' algorithm with the 'fisher' test
-990 GO terms scored: 5 terms with p < 0.01
-Annotation data:
-    Annotated genes: 106313
-    Significant genes: 274
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 106  
+Description: Analysis of gains at the Porifera node  
+Ontology: BP  
+'weight01' algorithm with the 'fisher' test  
+990 GO terms scored: 5 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 106313  
+    Significant genes: 274  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 106    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -440,32 +440,32 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Cellular component*  
 
-Description: Analysis of gains at the Porifera node
-Ontology: CC
-'weight01' algorithm with the 'fisher' test
-237 GO terms scored: 3 terms with p < 0.01
-Annotation data:
-    Annotated genes: 138150
-    Significant genes: 491
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 15  
+Description: Analysis of gains at the Porifera node  
+Ontology: CC  
+'weight01' algorithm with the 'fisher' test  
+237 GO terms scored: 3 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 138150  
+    Significant genes: 491  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 15    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
-1 | GO:0016021 |               integral component of membrane     10128          66    36.00        <1e-30
-2 | GO:0016020 |                                     membrane     14987         100    53.27        <1e-30  
+1 | GO:0016021 |               integral component of membrane | 10128 | 66 | 36.00 | <1e-30
+2 | GO:0016020 |                                     membrane | 14987 | 100 | 53.27 | <1e-30  
 
 *Molecular function*  
 
-Description: Analysis of gains at the Porifera node
-Ontology: MF
-'weight01' algorithm with the 'fisher' test
-572 GO terms scored: 13 terms with p < 0.01
-Annotation data:
-    Annotated genes: 1502288
-    Significant genes: 5399
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 83  
+Description: Analysis of gains at the Porifera node  
+Ontology: MF  
+'weight01' algorithm with the 'fisher' test  
+572 GO terms scored: 13 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 1502288  
+    Significant genes: 5399  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 83    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -480,15 +480,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Biological process*  
 
-Description: Analysis of loss at the Porifera node
-Ontology: BP
-'weight01' algorithm with the 'fisher' test
-990 GO terms scored: 11 terms with p < 0.01
-Annotation data:
-    Annotated genes: 106313
-    Significant genes: 433
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 99  
+Description: Analysis of loss at the Porifera node  
+Ontology: BP  
+'weight01' algorithm with the 'fisher' test  
+990 GO terms scored: 11 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 106313  
+    Significant genes: 433  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 99    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -500,15 +500,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Cellular component*  
 
-Description: Analysis of loss at the Porifera node
-Ontology: CC
-'weight01' algorithm with the 'fisher' test
-237 GO terms scored: 9 terms with p < 0.01
-Annotation data:
-    Annotated genes: 138150
-    Significant genes: 486
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 53  
+Description: Analysis of loss at the Porifera node  
+Ontology: CC  
+'weight01' algorithm with the 'fisher' test  
+237 GO terms scored: 9 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 138150  
+    Significant genes: 486  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 53    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -520,15 +520,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Molecular function*  
 
-Description: Analysis of loss at the Porifera node
-Ontology: MF
-'weight01' algorithm with the 'fisher' test
-572 GO terms scored: 40 terms with p < 0.01
-Annotation data:
-    Annotated genes: 1502288
-    Significant genes: 24121
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 137  
+Description: Analysis of loss at the Porifera node  
+Ontology: MF  
+'weight01' algorithm with the 'fisher' test  
+572 GO terms scored: 40 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 1502288  
+    Significant genes: 24121  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 137    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -564,15 +564,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Biological process*  
 
-Description: Analysis of gains at the Cteno node
-Ontology: BP
-'weight01' algorithm with the 'fisher' test
-998 GO terms scored: 6 terms with p < 0.01
-Annotation data:
-    Annotated genes: 106317
-    Significant genes: 122
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 113  
+Description: Analysis of gains at the Cteno node  
+Ontology: BP  
+'weight01' algorithm with the 'fisher' test  
+998 GO terms scored: 6 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 106317  
+    Significant genes: 122  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 113    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -581,15 +581,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Cellular component*  
 
-Description: Analysis of gains at the Cteno node
-Ontology: CC
-'weight01' algorithm with the 'fisher' test
-237 GO terms scored: 3 terms with p < 0.01
-Annotation data:
-    Annotated genes: 142451
-    Significant genes: 1484
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 37  
+Description: Analysis of gains at the Cteno node  
+Ontology: CC  
+'weight01' algorithm with the 'fisher' test  
+237 GO terms scored: 3 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 142451  
+    Significant genes: 1484  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 37    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -599,15 +599,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Molecular function*  
 
-Description: Analysis of gains at the Cteno node
-Ontology: MF
-'weight01' algorithm with the 'fisher' test
-573 GO terms scored: 27 terms with p < 0.01
-Annotation data:
-    Annotated genes: 1507423
-    Significant genes: 3434
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 96  
+Description: Analysis of gains at the Cteno node  
+Ontology: MF  
+'weight01' algorithm with the 'fisher' test  
+573 GO terms scored: 27 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 1507423  
+    Significant genes: 3434  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 96    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -626,15 +626,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Biological process*  
 
-Description: Analysis of losses at the Cteno node
-Ontology: BP
-'weight01' algorithm with the 'fisher' test
-998 GO terms scored: 54 terms with p < 0.01
-Annotation data:
-    Annotated genes: 106317
-    Significant genes: 9748
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 530  
+Description: Analysis of losses at the Cteno node  
+Ontology: BP  
+'weight01' algorithm with the 'fisher' test  
+998 GO terms scored: 54 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 106317  
+    Significant genes: 9748  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 530    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -679,15 +679,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Cellular component*  
 
-Description: Analysis of losses at the Cteno node
-Ontology: CC
-'weight01' algorithm with the 'fisher' test
-237 GO terms scored: 23 terms with p < 0.01
-Annotation data:
-    Annotated genes: 142451
-    Significant genes: 6234
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 128  
+Description: Analysis of losses at the Cteno node  
+Ontology: CC  
+'weight01' algorithm with the 'fisher' test  
+237 GO terms scored: 23 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 142451  
+    Significant genes: 6234  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 128    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
@@ -709,15 +709,15 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 *Molecular function*  
 
-Description: Analysis of losses at the Cteno node
-Ontology: MF
-'weight01' algorithm with the 'fisher' test
-573 GO terms scored: 122 terms with p < 0.01
-Annotation data:
-    Annotated genes: 1507423
-    Significant genes: 192721
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 356  
+Description: Analysis of losses at the Cteno node  
+Ontology: MF  
+'weight01' algorithm with the 'fisher' test  
+573 GO terms scored: 122 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 1507423  
+    Significant genes: 192721  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 356    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
 --- | --- | --- | --- | --- | ---
