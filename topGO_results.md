@@ -38,6 +38,7 @@ Annotation data:
     Nontrivial nodes: 15    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0016021 |               integral component of membrane     10574          66    36.10        <1e-30  
 2 | GO:0016020 |                                     membrane     16045         100    54.78        <1e-30    
 
@@ -54,6 +55,7 @@ Annotation data:
     Nontrivial nodes: 83    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0005515 |                              protein binding | 66620 | 427 | 219.67 | < 1e-30  
 2 | GO:0005201 |  extracellular matrix structural constitu... | 222 | 11 | 0.73 | 3.5e-21  
 3 | GO:0005524 |                                  ATP binding | 2428 | 19 | 8.01 | 1.9e-20  
@@ -75,7 +77,8 @@ Annotation data:
     Min. no. of genes annotated to a GO: 1  
     Nontrivial nodes: 114  
 
-GO.ID                                           Term    Annotated   Significant Expected classicFisher  
+GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0007165 |                          signal transduction | 3134 | 33 | 15.79 | 1.2e-26  
 2 | GO:0015708 |  silicic acid import across plasma membra... | 6 | 6 | 0.03 | 3.2e-19  
 3 | GO:0006206 |      pyrimidine nucleobase metabolic process | 4 | 4 | 0.02 | 4.8e-13  
@@ -98,6 +101,7 @@ Annotation data:
     Nontrivial nodes: 64    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0016021 |               integral component of membrane | 10574 | 427 | 276.73 | < 1e-30  
 2 | GO:0016592 |                             mediator complex | 184 | 52 | 4.82 | < 1e-30  
 3 | GO:0016020 |                                     membrane | 16045 | 505 | 419.92 | < 1e-30  
@@ -118,6 +122,7 @@ Annotation data:
     Nontrivial nodes: 155    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0005515 |                              protein binding | 66620 | 1767 | 1259.64 | < 1e-30  
 2 | GO:0008191 |      metalloendopeptidase inhibitor activity | 71 | 70 | 1.34 | < 1e-30  
 3 | GO:0030414 |                 peptidase inhibitor activity | 1218 | 120 | 23.03 | < 1e-30  
@@ -163,6 +168,7 @@ Annotation data:
     Nontrivial nodes: 113  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0042981 |              regulation of apoptotic process | 149 | 6 | 0.17 | 5.1e-13  
 2 | GO:0051260 |                  protein homooligomerization | 196 | 4 | 0.23 | 8.0e-08    
 
@@ -179,6 +185,7 @@ Annotation data:
     Nontrivial nodes: 37    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0016021 |               integral component of membrane | 10347 | 285 | 110.35 | < 1e-30  
 2 | GO:0016020 |                                     membrane | 15188 | 301 | 161.98 | 3.7e-17    
 
@@ -195,6 +202,7 @@ Annotation data:
     Nontrivial nodes: 96    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0005515 |                              protein binding | 59949 | 260 | 137.21 | < 1e-30  
 2 | GO:0005509 |                          calcium ion binding | 4367 | 35 | 10.00 | < 1e-30  
 3 | GO:0003676 |                         nucleic acid binding | 14298 | 37 | 32.73 | 1.4e-12  
@@ -222,6 +230,7 @@ Annotation data:
     Nontrivial nodes: 530  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0006629 |                      lipid metabolic process | 1065 | 204 | 100.76 | < 1e-30  
 2 | GO:0000160 |      phosphorelay signal transduction system | 70 | 68 | 6.62 | < 1e-30  
 3 | GO:0006807 |          nitrogen compound metabolic process | 4794 | 409 | 453.57 | < 1e-30  
@@ -274,6 +283,7 @@ Annotation data:
     Nontrivial nodes: 128    
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0016021 |               integral component of membrane | 10347 | 1105 | 468.04 | < 1e-30  
 2 | GO:0016020 |                                     membrane | 15188 | 1465 | 687.01 | < 1e-30  
 3 | GO:0005761 |                       mitochondrial ribosome | 59 | 58 | 2.67 | < 1e-30  
@@ -303,6 +313,7 @@ Annotation data:
     Nontrivial nodes: 358     
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher  
+--- | --- | --- | --- | --- | ---
 1 | GO:0016491 |                     oxidoreductase activity | 1191 | 414 | 157.83 | < 1e-30  
 2 | GO:0008168 |                  methyltransferase activity | 1333 | 590 | 176.65 | < 1e-30  
 3 | GO:0016787 |                          hydrolase activity | 7070 | 1560 | 936.90 | < 1e-30  
@@ -420,7 +431,8 @@ Annotation data:
     Min. no. of genes annotated to a GO: 1
     Nontrivial nodes: 106  
 
-    GO.ID | Term | Annotated | Significant | Expected | classicFisher
+GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0070836 |                             caveola assembly | 28 | 14 | 0.07 | < 1e-30
 2 | GO:0042981 |              regulation of apoptotic process | 156 | 13 | 0.40 | 1.6e-25
 3 | GO:0006464 |        cellular protein modification process | 815 | 9 | 2.10 | 4.8e-10
@@ -438,7 +450,8 @@ Annotation data:
     Min. no. of genes annotated to a GO: 1
     Nontrivial nodes: 15  
 
-    GO.ID | Term | Annotated | Significant | Expected | classicFisher
+GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0016021 |               integral component of membrane     10128          66    36.00        <1e-30
 2 | GO:0016020 |                                     membrane     14987         100    53.27        <1e-30  
 
@@ -455,6 +468,7 @@ Annotation data:
     Nontrivial nodes: 83  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0005515 |                              protein binding | 60116 | 427 | 216.05 | < 1e-30
 2 | GO:0005201 |  extracellular matrix structural constitu... | 209 | 11 | 0.75 | 4.5e-21
 3 | GO:0005524 |                                  ATP binding | 2248 | 19 | 8.08 | 2.2e-20
@@ -477,6 +491,7 @@ Annotation data:
     Nontrivial nodes: 99  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0007165 |                          signal transduction | 3080 | 30 | 12.54 | 5.1e-28
 2 | GO:0015708 |  silicic acid import across plasma membra... | 6 | 6 | 0.02 | 9.2e-20
 3 | GO:0006206 |      pyrimidine nucleobase metabolic process | 4 | 4 | 0.02 | 2.2e-13
@@ -496,6 +511,7 @@ Annotation data:
     Nontrivial nodes: 53  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0016592 |                             mediator complex | 157 | 52 | 0.55 | < 1e-30
 2 | GO:0034719 |                       SMN-Sm protein complex | 18 | 18 | 0.06 | < 1e-30
 3 | GO:0005634 |                                      nucleus | 940 | 68 | 3.31 | 1.9e-20
@@ -515,6 +531,7 @@ Annotation data:
     Nontrivial nodes: 137  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0005515 |                              protein binding | 60116 | 1390 | 965.23 | < 1e-30
 2 | GO:0008773 |  [protein-PII] uridylyltransferase activi... | 24 | 24 | 0.39 | < 1e-30
 3 | GO:0016747 |  transferase activity, transferring acyl ... | 1705 | 63 | 27.38 | < 1e-30
@@ -558,6 +575,7 @@ Annotation data:
     Nontrivial nodes: 113  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0042981 |              regulation of apoptotic process | 149 | 6 | 0.17 | 5.0e-13
 2 | GO:0051260 |                  protein homooligomerization | 196 | 4 | 0.22 | 8.0e-08  
 
@@ -574,6 +592,7 @@ Annotation data:
     Nontrivial nodes: 37  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0016021 |               integral component of membrane | 10347 | 285 | 107.79 | < 1e-30
 2 | GO:0016020 |                                     membrane | 15188 | 301 | 158.22 | 2.5e-17  
 
@@ -591,6 +610,7 @@ Annotation data:
     Nontrivial nodes: 96  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0005515 |                              protein binding | 59949 | 260 | 136.57 | < 1e-30
 2 | GO:0005509 |                          calcium ion binding | 4367 | 35 | 9.95 | < 1e-30
 3 | GO:0003676 |                         nucleic acid binding | 14298 | 37 | 32.57 | 1.3e-12
@@ -617,6 +637,7 @@ Annotation data:
     Nontrivial nodes: 530  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0006629 |                      lipid metabolic process | 1065 | 204 | 97.65 | < 1e-30
 2 | GO:0006807 |          nitrogen compound metabolic process | 4794 | 407 | 439.55 | < 1e-30
 3 | GO:0000160 |      phosphorelay signal transduction system | 70 | 67 | 6.42 | < 1e-30
@@ -669,6 +690,7 @@ Annotation data:
     Nontrivial nodes: 128  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0016021 |               integral component of membrane | 10347 | 1098 | 452.81 | < 1e-30
 2 | GO:0016020 |                                     membrane | 15188 | 1453 | 664.66 | < 1e-30
 3 | GO:0005761 |                       mitochondrial ribosome | 59 | 58 | 2.58 | < 1e-30
@@ -698,6 +720,7 @@ Annotation data:
     Nontrivial nodes: 356  
 
 GO.ID | Term | Annotated | Significant | Expected | classicFisher
+--- | --- | --- | --- | --- | ---
 1 | GO:0016787 |                          hydrolase activity | 7070 | 1538 | 903.89 | < 1e-30
 2 | GO:0016491 |                     oxidoreductase activity | 1191 | 412 | 152.27 | < 1e-30
 3 | GO:0005515 |                             protein binding | 59949 | 8435 | 7664.36 | < 1e-30
