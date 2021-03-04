@@ -6,21 +6,21 @@ I've used this program to find out which gene ontology terms are enriched in gai
 
 #### Gains at the Porifera node  
 *Biological process*  
-Description: Analysis of gains at the Porifera node
-Ontology: BP
-'weight01' algorithm with the 'fisher' test
-1035 GO terms scored: 5 terms with p < 0.01
-Annotation data:
-    Annotated genes: 115696
-    Significant genes: 274
-    Min. no. of genes annotated to a GO: 1
-    Nontrivial nodes: 106  
+Description: Analysis of gains at the Porifera node  
+Ontology: BP  
+'weight01' algorithm with the 'fisher' test  
+1035 GO terms scored: 5 terms with p < 0.01  
+Annotation data:  
+    Annotated genes: 115696  
+    Significant genes: 274  
+    Min. no. of genes annotated to a GO: 1  
+    Nontrivial nodes: 106    
 
-    GO.ID                                        Term Annotated Significant Expected classicFisher
-1  GO:0070836                            caveola assembly       117          14     0.28       2.9e-30
-2  GO:0042981             regulation of apoptotic process       666          13     1.58       1.0e-17
-3  GO:0006464       cellular protein modification process       929           9     2.20       7.2e-10
-4  GO:0009116                nucleoside metabolic process       201           5     0.48       5.4e-08  
+    GO.ID                                        Term Annotated Significant Expected classicFisher  
+1  GO:0070836                            caveola assembly       117          14     0.28       2.9e-30  
+2  GO:0042981             regulation of apoptotic process       666          13     1.58       1.0e-17  
+3  GO:0006464       cellular protein modification process       929           9     2.20       7.2e-10  
+4  GO:0009116                nucleoside metabolic process       201           5     0.48       5.4e-08    
 
 *Cellular component*  
 Description: Analysis of gains at the Porifera node
