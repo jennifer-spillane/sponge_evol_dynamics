@@ -6,7 +6,7 @@ I've used this program to find out which gene ontology terms are enriched in gai
 
 ### Gains at the Porifera node  
 
-*Biological process*  
+#### *Biological process*  
 
 Description: Analysis of gains at the Porifera node  
 Ontology: BP  
@@ -25,7 +25,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 3 | GO:0006464 |        cellular protein modification process | 929 | 9 | 2.20 | 7.2e-10  
 4 | GO:0009116 |                 nucleoside metabolic process | 201 | 5 | 0.48 | 5.4e-08    
 
-*Cellular component*  
+#### *Cellular component*  
 
 Description: Analysis of gains at the Porifera node  
 Ontology: CC  
@@ -42,7 +42,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 1 | GO:0016021 |               integral component of membrane     10574          66    36.10        <1e-30  
 2 | GO:0016020 |                                     membrane     16045         100    54.78        <1e-30    
 
-*Molecular function*  
+#### *Molecular function*  
 
 Description: Analysis of gains at the Porifera node  
 Ontology: MF  
@@ -65,7 +65,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 ### Losses at the Porifera node  
 
-*Biological process*  
+#### *Biological process*  
 
 Description: Analysis of loss at the Porifera node  
 Ontology: BP  
@@ -88,7 +88,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 7 | GO:0019079 |                     viral genome replication | 2 | 2 | 0.01 | 7.1e-07   
 
 
-*Cellular component*  
+#### *Cellular component*  
 
 Description: Analysis of loss at the Porifera node  
 Ontology: CC  
@@ -109,7 +109,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 5 | GO:0005634 |                                      nucleus | 1021 | 68 | 26.72 | 8.8e-10    
 
 
-*Molecular function*  
+#### *Molecular function*  
 
 Description: Analysis of loss at the Porifera node  
 Ontology: MF  
@@ -155,7 +155,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 ### Gains at the Ctenophora node  
 
-*Biological process*  
+#### *Biological process*  
 
 Description: Analysis of gains at the Cteno node  
 Ontology: BP  
@@ -172,7 +172,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 1 | GO:0042981 |              regulation of apoptotic process | 149 | 6 | 0.17 | 5.1e-13  
 2 | GO:0051260 |                  protein homooligomerization | 196 | 4 | 0.23 | 8.0e-08    
 
-*Cellular component*  
+#### *Cellular component*  
 
 Description: Analysis of gains at the Cteno node  
 Ontology: CC  
@@ -189,7 +189,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 1 | GO:0016021 |               integral component of membrane | 10347 | 285 | 110.35 | < 1e-30  
 2 | GO:0016020 |                                     membrane | 15188 | 301 | 161.98 | 3.7e-17    
 
-*Molecular function*  
+#### *Molecular function*  
 
 Description: Analysis of gains at the Cteno node  
 Ontology: MF  
@@ -218,7 +218,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 ### Losses at the Ctenophora node  
 
-*Biological process*  
+#### *Biological process*  
 Description: Analysis of losses at the Cteno node  
 Ontology: BP  
 'weight01' algorithm with the 'fisher' test  
@@ -270,7 +270,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 37 | GO:0019428 |              allantoin biosynthetic process | 4 | 4 | 0.38 | 4.9e-08  
 38 | GO:0000105 |              histidine biosynthetic process | 4 | 4 | 0.38 | 4.9e-08  
 
-*Cellular component*   
+#### *Cellular component*   
 
 Description: Analysis of losses at the Cteno node  
 Ontology: CC  
@@ -300,7 +300,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 14 | GO:0016010 | dystrophin-associated glycoprotein compl... | 8 | 8 | 0.36 | 6.9e-16  
 15 | GO:0005886 |                             plasma membrane | 137 | 15 | 6.20 | 2.6e-08    
 
-*Molecular function*  
+#### *Molecular function*  
 
 Description: Analysis of losses at the Cteno node  
 Ontology: MF  
@@ -419,7 +419,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 ### Porifera gains  
 
-*Biological process*  
+#### *Biological process*  
 
 Description: Analysis of gains at the Porifera node  
 Ontology: BP  
@@ -438,7 +438,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 3 | GO:0006464 |        cellular protein modification process | 815 | 9 | 2.10 | 4.8e-10
 4 | GO:0009116 |                 nucleoside metabolic process | 200 | 5 | 0.52 | 7.9e-08  
 
-*Cellular component*  
+#### *Cellular component*  
 
 Description: Analysis of gains at the Porifera node  
 Ontology: CC  
@@ -455,7 +455,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 1 | GO:0016021 |               integral component of membrane | 10128 | 66 | 36.00 | <1e-30
 2 | GO:0016020 |                                     membrane | 14987 | 100 | 53.27 | <1e-30  
 
-*Molecular function*  
+#### *Molecular function*  
 
 Description: Analysis of gains at the Porifera node  
 Ontology: MF  
@@ -478,7 +478,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 ### Porifera losses  
 
-*Biological process*  
+#### *Biological process*  
 
 Description: Analysis of loss at the Porifera node  
 Ontology: BP  
@@ -498,7 +498,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 4 | GO:0006351 |                 transcription, DNA-templated | 794 | 11 | 3.23 | 1.8e-10
 5 | GO:0006629 |                      lipid metabolic process | 1065 | 9 | 4.34 | 6.1e-08  
 
-*Cellular component*  
+#### *Cellular component*  
 
 Description: Analysis of loss at the Porifera node  
 Ontology: CC  
@@ -518,7 +518,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 4 | GO:0016021 |               integral component of membrane | 10128 | 45 | 35.63 | 8.2e-15
 5 | GO:0016020 |                                     membrane | 14987 | 73 | 52.72 | 9.8e-15  
 
-*Molecular function*  
+#### *Molecular function*  
 
 Description: Analysis of loss at the Porifera node  
 Ontology: MF  
@@ -562,7 +562,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 ### Ctenophora gains  
 
-*Biological process*  
+#### *Biological process*  
 
 Description: Analysis of gains at the Cteno node  
 Ontology: BP  
@@ -579,7 +579,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 1 | GO:0042981 |              regulation of apoptotic process | 149 | 6 | 0.17 | 5.0e-13
 2 | GO:0051260 |                  protein homooligomerization | 196 | 4 | 0.22 | 8.0e-08  
 
-*Cellular component*  
+#### *Cellular component*  
 
 Description: Analysis of gains at the Cteno node  
 Ontology: CC  
@@ -597,7 +597,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 2 | GO:0016020 |                                     membrane | 15188 | 301 | 158.22 | 2.5e-17  
 
 
-*Molecular function*  
+#### *Molecular function*  
 
 Description: Analysis of gains at the Cteno node  
 Ontology: MF  
@@ -624,7 +624,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 
 ### Ctenophora losses  
 
-*Biological process*  
+#### *Biological process*  
 
 Description: Analysis of losses at the Cteno node  
 Ontology: BP  
@@ -677,7 +677,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 37 | GO:0019428 |              allantoin biosynthetic process | 4 | 4 | 0.37 | 4.4e-08
 38 | GO:0000105 |              histidine biosynthetic process | 4 | 4 | 0.37 | 4.4e-08  
 
-*Cellular component*  
+#### *Cellular component*  
 
 Description: Analysis of losses at the Cteno node  
 Ontology: CC  
@@ -707,7 +707,7 @@ GO.ID | Term | Annotated | Significant | Expected | classicFisher
 14 | GO:0016010 | dystrophin-associated glycoprotein compl... | 8 | 8 | 0.35 | 5.3e-16
 15 | GO:0005886 |                             plasma membrane | 137 | 15 | 6.00 | 2.3e-08  
 
-*Molecular function*  
+#### *Molecular function*  
 
 Description: Analysis of losses at the Cteno node  
 Ontology: MF  
