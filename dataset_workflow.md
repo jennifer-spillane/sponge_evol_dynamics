@@ -366,17 +366,26 @@ Here, -l is the list file I just made, -l is a directory containing every orthog
 
 Takes a minute to run through all of the files, but works great!
 
-
-
-
-
-
-
-
-
-
-
-parser = argparse.ArgumentParser(description = "arguments for finding the functions of specific mouse transcripts")
-parser.add_argument("-i", "--inter", required = True, help = "path to interproscan tsv output")
-parser.add_argument("-l", "--listfile", required = True, help = "path to a list file of all transcripts of interest")
-parser.add_argument("-o", "--out", required = True, help = "path to an output text file")
+A couple that I'll do right away:  
+GO:0070836 - caveola assembly - this one is significantly enriched in the Porifera gains  
+- OG0010034  
+GO:0003700 - DNA-binding transcription factor activity - lost at the Porifera node and a top hit in Revigo  
+- OG0088130  
+- OG0009057  
+- OG0017907  
+- OG0088436  
+- OG0007454  
+- OG0088257  
+- OG0023518  
+- OG0024124  
+- OG0006576  
+- OG0070963  
+- OG0008584  
+- OG0070719  
+- OG0037600  
+- OG0023191  
+- OG0068873  
+- OG0006320  
+- OG0058837  
+GO:0005201 - extracellular matrix structural constituent - lost at the Porifera node and a top hit in Revigo  
+- OG0010863  
