@@ -356,7 +356,16 @@ There are 59 lines of results here. I'm just going to take the sequence name of 
 This yields just one instance (which makes sense) "Porifera_gain_seqs/OG0011214.fa" so that worked great!  
 I did the same thing for the last entry in that first grep result, "Mycale_grandis_48606" and it gave me a different orthogroup, "Porifera_gain_seqs/OG0012807.fa" so there could definitely be multiple that have the same GO term associated with them. Because of this, I'm going to take a slightly different approach to finding the right OGs. I'll save the results of that first grep to a file, and then pare it down to just the sequence names. Then I can use one of the scripts I've already written to pull out the OGs associated with those sequences.  
 
-I looked for the same GO term in the Porifera losses because it is also listed there, and got a differnt OG back
+I looked for the same GO term in the Porifera losses because it is also listed there, and got a different OG back, which makes sense.  
+
+**Update:** The extra-good news is, I already wrote this script! I wrote it originally to get info about alien sequences in the orthogroups, but it works for any list of sequence names that you want more orthogroup info about. And it's already been tested and optimized, so it should work well.  I'm going to start with one that popped up as significantly enriched as a gain at the sponge node, GO:0070836.
+`grep "GO:0070836" Porifera_gain_inter.tsv | cut -f 1 > GO_0070836.txt`  
+
+Here, -l is the list file I just made, -l is a directory containing every orthogroup sponges might have, -o is the output file with just a list of orthogroups, and -c is a tab separated file containing the names of the orthogroups with the number of sequences in them that were in the original list (this last one won't be super useful, I don't think, but will not hurt anything).  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py -l GO_0070836.txt -d all_sponge_seqs/ -o GO_0070836_og_names.txt -c GO_0070836_og_counts.tsv`  
+
+Takes a minute to run through all of the files, but works great!
+
 
 
 
