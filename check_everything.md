@@ -81,3 +81,39 @@ This script works great, but takes a while to run (unsurprising, considering the
 
 **More updates:** This is great info to have, but I also just want a simple script that will remove problematic sequences from the interproscan results (obviously all of this is really meant to be done at the beginning of a study before you run a lot of the analyses, but it just doensn't always go down that way). So I wrote one here: `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py` that takes a list of alien (or otherwise problematic) sequence names and an interproscan output tsv file and outputs a new tsv file without all of the results from the sequences named in the list.  
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a test_aliens.txt -t test.tsv -o test_done.tsv`  
+
+
+
+### Do genes in the same orthogroup get annotated with different GO terms?  
+
+I've been relating GO annotations back to the orthogroups that contain the sequences that were annotated. We want to know now if all the sequences in a given orthogroup will always be annotated with the same GO term. I think the early sets of genes I interproscanned might be useful for this, since they contained whole orthogroups of sequences instead of the filtered ones I used later.  
+
+
+
+
+
+
+
+### Does the uclustering step cluster all or most of the orthogroups in a consistent way?
+
+Since we end up testing the clustered sequences that were run through interproscan in topGO, I want to know how consistently the uclust program is clustering the sequences in orthogroups. Theoretically, there could be one orthogroup that lots of sponges have, that has not diverged that much over the millennia, and that gets clustered into just a few centroid sequences. Then there could be another that has the same number of sequences as the first originally, but diverged more, and so gets clustered into more sequences and ends up with more entries in the interproscan results. This could potentially bias those results into thinking that the more divergent orthogroup is enriched, simply because it has more entries in the interproscan results file. So I'm going to find out how linear the relationship is between original number of sequences in an orthogroup, and number of centroid sequences after uclust does its work.  
+
+I wrote a script that pulls out the number of sequences from fasta files in a directory and records them in a tsv. I did it on the Porifera loss sequences to check things out and it looks very linear, but I'm going to do it on the Metazoa present seqs because it's a nice large dataset for testing.   
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/count_seqs.py -d Metazoa_present_seqs/ -o Metazoa_present_counts.tsv`  
+
+This gives me a tsv with all the file names and counts of how many sequences they have.  
+`head Metazoa_present_counts.tsv`  
+OG0003937.fa.fasta	126  
+OG0059868.fa	4  
+OG0103678.fa	2  
+OG0004795.fa	152  
+OG0023117.fa.fasta	6  
+OG0009957.fa.fasta	25  
+OG0008192.fa.fasta	42  
+OG0007861.fa	65  
+OG0008988.fa.fasta	36  
+OG0000542.fa.fasta	295  
+
+From here, I'll download it, pop it into bbedit, and remove the file extensions. I'll also add a category at the beginning (followed by a tab) that is either "original" (for the .fa files) or "centroid" (for the .fa.fasta files). Then I import it into excel, do a quick pivot table, and pop it into R for plotting. A little roundabout maybe, but it works and is pretty quick. I tagged this one onto the end of the exploratory plotting R script I already had going for this project, "prelim_stats.R".  
+
+Looking super super linear, so I think we are mostly good. If it clusters in a proportional way each time, our results will be proportional to the results we would have gotten if we had interproscanned the whole dataset.  
