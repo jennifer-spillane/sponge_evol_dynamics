@@ -20,14 +20,19 @@ def identify_ogs():
 
     try:
         with open("{0}".format(args.listfile), "r") as inlist:
+            #add all the sequence names to a set
             for seq in inlist:
                 seq_name = seq.strip()
                 alien_seqs.add(seq_name)
             with open("{0}".format(args.output), "w") as outlist:
                 with open("{0}".format(args.countfile), "w") as counts:
+                    #scan through the directory containing the fasta files to be searched
+                    #isolate the name of the orthogroup from the file name
                     for file in os.scandir("{0}".format(args.directory)):
                         og_name = re.match("(OG\d+)\.fa", "{0}".format(file.name))
                         if og_name:
+                            #go through each sequence in the fasta and check to see if the name matches one in the set
+                            #if it does, put the sequence name as the key and the orthogroup as the value of a dictionary
                             for record in Bio.SeqIO.parse("{0}".format(file.path), "fasta"):
                                 if record.id in alien_seqs:
                                     aliens_with_ogs.setdefault(record.id, og_name.group(1))
@@ -35,11 +40,13 @@ def identify_ogs():
                                     continue
 
 
-                    #now write the output files with the info gathered into the dictionaries
+                    #now write the first output file with the info from the first dictionary
+                    #populate the second dictionary with counts as it goes
                     for item in aliens_with_ogs:
                         outlist.write("{0}\t{1}\n".format(item, aliens_with_ogs[item]))
                         ogs_and_counts.setdefault(aliens_with_ogs[item], 0)
                         ogs_and_counts[aliens_with_ogs[item]] += 1
+                    #write out the count info also 
                     for entry in ogs_and_counts:
                         counts.write("{0}\t{1}\n".format(entry, ogs_and_counts[entry]))
 
