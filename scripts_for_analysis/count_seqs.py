@@ -8,20 +8,24 @@ import os
 import argparse
 
 def count():
-
+    #make a list to hold each tuple later
     list_of_seqcounts = []
     try:
-
+        #scan through the files in a directory looking for fasta ones
         for file in os.scandir("{0}".format(args.indir)):
             if file.name.endswith("fa") or file.name.endswith("fasta"):
+                #establish a counter and loop through the sequence records counting them
                 seq_count = 0
                 for record in Bio.SeqIO.parse("{0}".format(file.path), "fasta"):
                     seq_count += 1
+                #create a tuple containing the fasta name and the number of seqs it has
+                #add this tuple to the list we made earlier
                 num_seqs = (file.name, seq_count)
                 list_of_seqcounts.append(num_seqs)
-
             else:
                 continue
+
+        #write to the outfile, looping through the list and separating the tuple elements with tabs 
         with open("{0}".format(args.outfile), "w") as out:
             for pair in list_of_seqcounts:
                 out.write("{0}\t{1}\n".format(pair[0], pair[1]))
