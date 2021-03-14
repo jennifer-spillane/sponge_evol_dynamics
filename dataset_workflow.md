@@ -389,3 +389,63 @@ GO:0003700 - DNA-binding transcription factor activity - lost at the Porifera no
 - OG0058837  
 GO:0005201 - extracellular matrix structural constituent - lost at the Porifera node and a top hit in Revigo  
 - OG0010863  
+
+
+#### Characterizing gains and losses at the cteno and sponge nodes (sponge-first tree)  
+
+I needed the actual GO terms associated with losses at these two nodes for this tree (I just had the sequence names before).  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Ctenophora_loss_filtered_seqnames.txt -t gene_universe_Ctenophora_goterms.tsv -o Ctenophora_loss_goterms.tsv`  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Porifera_loss_filtered_seqnames.txt -t gene_universe_Porifera_goterms.tsv -o Porifera_loss_goterms.tsv`  
+
+Then I downloaded these resulting files. I don't need to download "Porifera_gain_inter.tsv" and "Ctenophora_gain_inter.tsv" because they are identical to the ones in the other tree. Again, because the gains are based on the nodes below them, not on the nodes above. I opened them in BBEdit, isolated the GO terms, and popped them into revigo.  
+
+
+
+
+
+
+
+
+
+
+
+
+#### I need lists of all the GO terms associated with each orthogroup  
+
+From inside this directory: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/Metazoa_present_seqs/  
+
+This is what it looks like for an individual one:  
+`grep ">" OG0000000.fa.fasta | sed 's_>__' > OG0000000.fa.fasta.seqs.txt`
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l OG0000000.fa.fasta.seqs.txt -t /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/Metazoa_present_all_inter.tsv -o OG0000000.fa.fasta.goterms.tsv`
+`cut -f 14 OG0000000.fa.fasta.goterms.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > OG0000000.fa.fasta.goterms.txt`
+
+This is what it looks like for lots of files at once:  
+```bash  
+#! /bin/bash   
+for file in $(ls *fasta)  
+do  
+grep ">" $file | sed 's_>__' > $file.seqs.txt  
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l $file.seqs.txt -t /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/Metazoa_present_all_inter.tsv -o $file.goterms.tsv  
+cut -f 14 $file.goterms.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > $file.goterms.txt  
+done   
+```  
+
+This was going too slowly, so I had to split it up into multiple jobs for Metazoa presences and Ctenophora losses (sponge-first), but it worked the same way.  
+
+Then I catted the files together from inside the directory where they were being made, like this:  
+`cat *terms.txt >> ../Porifera_loss_og_goterms.txt`  
+
+And then I could download them and pop them into the R script.  
+
+
+
+
+#### Word clouds  
+
+```bash  
+#! /bin/bash   
+for file in $(ls *terms.tsv)  
+do  
+cut -f 6 $file | sed '/^$/d' | sort | uniq > $file.uniqdes.txt   
+done   
+```  
