@@ -343,6 +343,44 @@ There are **1808** OGs that are lost at the Porifera node no matter which clade 
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Porifera_common_losses_seqnames.txt -t gene_universe_Porifera_no_aliens.tsv -o Porifera_common_losses_inter.tsv`  
 
 
+Comparing the unique GO terms of the losses from the ctenopore node in both trees.
+comm -12 Desktop/Analyses/gain_loss/unique_sf_ctenoloss_gos.txt Dropbox/Jenn_R/Gain_Loss/Cteno_First/Ctenos/cteno_loss_gos.txt | wc -l
+    1682
+comm -23 Desktop/Analyses/gain_loss/unique_sf_ctenoloss_gos.txt Dropbox/Jenn_R/Gain_Loss/Cteno_First/Ctenos/cteno_loss_gos.txt | wc -l
+       0
+comm -13 Desktop/Analyses/gain_loss/unique_sf_ctenoloss_gos.txt Dropbox/Jenn_R/Gain_Loss/Cteno_First/Ctenos/cteno_loss_gos.txt | wc -l
+      29
+
+Porifera-first lost GO terms are completely contained by Ctenophora-first lost GO terms.
+
+#### Checking the overlap of GO terms between gains and losses at each node
+
+I need to find out how many overlapping GO terms there are between the losses and the gains for both trees. I've already sort of done these comparisons when I was isolating the terms for the unique sets, but I just want the numbers this time.  
+
+I'm going to use the "og_goterms.txt" files as a starting place, since they will have all the info I need and nothing I don't. But these files are lists of all unique GO terms in each orthogroup, catted together, so there are lots of repeats.
+`sort Ctenophora_gain_og_goterms.txt | uniq > Ctenophora_gain_all_unique_terms.txt`  
+`sort Porifera_gain_og_goterms.txt | uniq > Porifera_gain_all_unique_terms.txt`  
+`sort losses/Ctenophora_loss_og_goterms.txt | uniq > losses/Ctenophora_loss_all_unique_terms.txt`  
+`sort losses/Porifera_loss_og_goterms.txt | uniq > losses/Porifera_loss_all_unique_terms.txt`  
+`sort ../sponge_first/Ctenophora_loss_og_goterms.txt | uniq > ../sponge_first/Ctenophora_loss_all_unique_terms.txt`  
+`sort ../sponge_first/Porifera_loss_og_goterms.txt | uniq > ../sponge_first/Porifera_loss_all_unique_terms.txt`  
+
+Now I can compare the gains and losses to one another.  
+Ctenophora-first, sponges: file 1 = 329, file 2 = 562, overlap = 182   
+`comm -12 Porifera_gain_all_unique_terms.txt losses/Porifera_loss_all_unique_terms.txt | wc -l`  
+
+Ctenophora-first, ctenophores: file 1 = 271, file 2 = 1949, overlap = 238    
+`comm -12 Ctenophora_gain_all_unique_terms.txt losses/Ctenophora_loss_all_unique_terms.txt | wc -l`  
+
+Porifera-first, sponges: file 1 = 329, file 2 = 510, overlap = 174   
+`comm -12 Porifera_gain_all_unique_terms.txt ../sponge_first/Porifera_loss_all_unique_terms.txt | wc -l`  
+
+Porifera-first, ctenophores: file 1 = 271, file 2 = 1920, overlap = 238   
+`comm -12 Ctenophora_gain_all_unique_terms.txt ../sponge_first/Ctenophora_loss_all_unique_terms.txt | wc -l`  
+
+So, all of them have a bit of overlap, but we've excluded the overlap for the revigo analyses, so it will not affect the gains and losses that we are crafting the story around.  
+
+
 #### Characterizing gains and losses at focal nodes (cteno first tree)  
 
 I have put lists of GO terms for the Porifera node into revigo (http://revigo.irb.hr/) which eliminates duplicates and helps with listing and visualizing the terms. I put in the GO terms for Porifera gains, a different one for Porifera losses, and a third one for Porifera losses that also overlap with Porifera losses in the sponge-first tree. These are the losses that no one will be able to dispute, so they could be important. I'm not sure which of these GO terms I should look into first, so I am just going to take a couple of top hits from the gains to begin with, and trace them back to their orthogroups. That way we can make trees from the orthogroups and get a clear idea of what they are in a more specific way than the very general terms that GO stuff annotates with.  
