@@ -293,6 +293,15 @@ I'll do each of the sponge nodes I've got on premise so far (so, the 7 [not coun
 - Myxospongia = 976  
 - por2 = 0 (this one will not have a file in the specific_losses directory, because it would be empty)  
 
+**Update:**  
+I'm doing the losses at the rest of the sponge nodes now, just looking for numbers.  
+- democ2 = 362  
+- democ3 = 501  
+- Democlavia = 914  
+- Demospongiidae = 61  
+- Heteroscleromorpha = 173  
+- Poecilosclerida = 576  
+
 
 #### Is it more parsimonious for the ctenophores to branch first?  
 
@@ -328,6 +337,18 @@ sponge losses = 2765
 comparison of the OGs gained in the sponge_rest node and Metazoa node with those lost in the Ctenophora node. Procedure is the same as above.  
 `comm -12 losses/sorted_Ctenophora_loss.txt sorted_Metazoa_gain.txt | less` <- yields nothing. Again, this makes sense for the Dollo parsimony approach.  
 At the Porifera node, sponges lose 957 (in metagain_spongeloss.txt) of the OGs gained at the Metazoa node.
+
+
+**How many orthogroups that are gained at the sponge+rest node in the Ctenophora-first tree get shifted over to the Metazoa node in the Porifera-first tree? And where do the other ones go?**
+
+`comm -12 sorted_sponge_rest.txt ../sponge_first/sorted_Metazoa_gains.txt | wc -l`  
+All of the gains that happen at the sponge+rest node in the cteno-first tree happen at the Metazoa node in the sponge-first tree  
+
+`comm -12 sorted_Metazoa_gain.txt ../sponge_first/sorted_cteno_rest.txt | wc -l`  
+They have 958 orthogroups in common - all of the ones from the cteno+rest node from the sponge-first tree  
+
+This makes sense but I wanted to double check.   
+
 
 
 #### How many losses are in common between the two trees?  
