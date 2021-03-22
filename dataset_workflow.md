@@ -211,7 +211,7 @@ Now I can pull out just the things I will need to run these data through topGO. 
 
 Since I did not interproscan these all separately, I will need to pull out the appropriate sequences from the output. I wrote a script that filters out sequences from interproscan results, so I'm converting it into a new one that will do the opposite - keep those sequences that are in a list provided to it. I'm going to start with Porifera, since I'll need it for all the others and it is the most fundamental, but all the others will be done the same way.    
 
-To pull these out, I'm going to start the same way that I did when I was interproscanning, and use the `pull_alignments.py` script. This will give me a directory with all of the othrogroup file in it. These fasta files contain all the sequences in that orthogroup. I will need to cat these sequences together, pull out just the sequence names, and remove the ">" symbol from the front so that they are just a list of sequence names.  
+To pull these out, I'm going to start the same way that I did when I was interproscanning, and use the `pull_alignments.py` script. This will give me a directory with all of the othrogroup file in it. These fasta files contain all the sequences in that orthogroup. I will need to cat these sequences together, pull out just the sequence names, and remove the ">" symbol from the front so that they are just a list of sequence names. Then I can use a script I wrote called "prune_interpro_results.py" to select just the lines of interproscan results that correspond to the sequence names in the file from the orthogroups.   
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l sponge_gains/Porifera.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/Porifera_gain_seqs/`  
 `grep -h ">" Porifera_gain_seqs/*fa | sed 's_>__' > Porifera_gain_seq_names.txt`  
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Porifera_gain_seq_names.txt -t sponge_specific_inter.tsv -o Porifera_gain_inter.tsv`  
@@ -448,6 +448,25 @@ GO:0003700 - DNA-binding transcription factor activity - lost at the Porifera no
 - OG0058837  
 GO:0005201 - extracellular matrix structural constituent - lost at the Porifera node and a top hit in Revigo  
 - OG0010863  
+
+I need to find all the GO terms for Metazoa gains and the gains at the sponge+rest node also. Sponge+rest is pretty easy, as I have done all of the steps before for different nodes, and it has a ready-to-go interproscan results file.  
+`cut -f 14 sponge_rest_inter.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > sponge_rest_unique_goterms.txt`  
+
+For the Metazoa node, I had to start back at the point of orthogroup names, and pulled the relevant interproscan results out based on the sequences in those orthogroups.  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l Metazoa_gain.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n Metazoa_gain_seqs/`
+`grep -h ">" Metazoa_gain_seqs/*fa | sed 's_>__' > Metazoa_gain_seq_names.txt`
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Metazoa_gain_seq_names.txt -t Metazoa_present_all_inter.tsv -o Metazoa_gain_inter.tsv`
+`cut -f 14 Metazoa_gain_inter.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > Metazoa_gain_unique_goterms.txt`
+
+I also want to see how many of these two lists overlap with one another (GO term-wise, they won't overlap at all on the level of orthogroup).  
+sponge_rest_unique_goterms.txt = 1416 unique GO terms   
+Metazoa_gain_unique_goterms.txt = 708 unique GO terms  
+`comm -12 Metazoa_gain_unique_goterms.txt sponge_rest_unique_goterms.txt | wc -l`  
+442 overlapping GO terms  
+
+I also made a file that has all of the unique GO terms from sponge+rest, without the overlapping ones with Metazoa.  
+`comm -13 Metazoa_gain_unique_goterms.txt sponge_rest_unique_goterms.txt > sponge_rest_nomet_unique_goterms.txt`  
+
 
 
 #### Characterizing gains and losses at the cteno and sponge nodes (sponge-first tree)  
