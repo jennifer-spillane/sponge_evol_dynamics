@@ -467,6 +467,8 @@ Metazoa_gain_unique_goterms.txt = 708 unique GO terms
 I also made a file that has all of the unique GO terms from sponge+rest, without the overlapping ones with Metazoa.  
 `comm -13 Metazoa_gain_unique_goterms.txt sponge_rest_unique_goterms.txt > sponge_rest_nomet_unique_goterms.txt`  
 
+I ran the raw Metazoa gains list through revigo (small setting) and the sponge+rest (or Porifera+ParaHoxozoa) gains through also (tiny setting) to get their GO info also.  
+
 
 
 #### Characterizing gains and losses at the cteno and sponge nodes (sponge-first tree)  
