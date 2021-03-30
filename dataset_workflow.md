@@ -425,29 +425,112 @@ Here, -l is the list file I just made, -l is a directory containing every orthog
 
 Takes a minute to run through all of the files, but works great!
 
-A couple that I'll do right away:  
-GO:0070836 - caveola assembly - this one is significantly enriched in the Porifera gains  
-- OG0010034  
-GO:0003700 - DNA-binding transcription factor activity - lost at the Porifera node and a top hit in Revigo  
-- OG0088130  
-- OG0009057  
-- OG0017907  
-- OG0088436  
-- OG0007454  
-- OG0088257  
-- OG0023518  
-- OG0024124  
-- OG0006576  
-- OG0070963  
-- OG0008584  
-- OG0070719  
-- OG0037600  
-- OG0023191  
-- OG0068873  
-- OG0006320  
-- OG0058837  
-GO:0005201 - extracellular matrix structural constituent - lost at the Porifera node and a top hit in Revigo  
-- OG0010863  
+**Metazoa gains:**  
+- GO:0017147 - Wnt protein binding - OG0000067  
+- GO:0005911 - cell-cell junction - OG0001805   
+- GO:0005615 - extracellular space - OG0000110, OG0002109, OG0004814, OG0032101, OG0000051, OG0000203  
+- GO:0008283 - cell population proliferation - OG0000016   
+- GO:0007155 - cell adhesion - OG0003495, OG0000821, OG0002452, OG0008099, OG0006772, OG0000696, OG0063416, OG0045604, OG0003668, OG0000009, OG0029462, OG0009221, OG0069489, OG0018438, OG0000345, OG0000205, OG0008154  
+    - GO:0007160 - cell matrix adhesion  
+    - GO:0007156 - homophilic cell adhesion via plasma membrane adhesion molecules  
+    - GO:0098609 - cell-cell adhesion  
+- GO:0015026 - coreceptor activity - OG0005525, OG0000009
+
+I'm going to script this so that it doesn't take me a million years.  
+
+```bash  
+#! /bin/bash   
+for term in GO:0008283 GO:0007155 GO:0015026  
+do  
+grep $term Metazoa_gain_inter.tsv | cut -f 1 > goterm_orthogroups/$term.txt
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py -l goterm_orthogroups/$term.txt -d Metazoa_gain_seqs/ -o goterm_orthogroups/$term_og_names.txt -c goterm_orthogroups/$term.tsv   
+done   
+```  
+
+This script does not successfully make the names.txt file, but it's not the more vital one anyway, so I'm just going to go with it for the sake of time. I'll change it to use a different interproscan results file to draw from, and different GO terms, and do it for the other nodes, listed below.  
+
+**Porifera+ParaHoxozoa gains:**  
+- GO:0009584 - detection of visible light - OG0009705, OG0042173, OG0013200  
+- GO:0010506 - regulation of autophagy - OG0048545  
+- GO:0007568 - aging - OG0002497  
+- GO:0099106 - ion channel regulator activity - OG0008591  
+
+```bash  
+#! /bin/bash   
+for term in GO:0009584 GO:0010506 GO:0007568 GO:0099106  
+do  
+grep $term sponge_rest_inter.tsv | cut -f 1 > goterm_orthogroups/$term.txt  
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py -l goterm_orthogroups/$term.txt -d sponge_rest_seqs -o goterm_orthogroups/$term_og_names.txt -c goterm_orthogroups/$term.tsv   
+done   
+```  
+
+**Porifera gains:**  
+- GO:0070836 - caveola assembly - OG0010034    
+- GO:0075509 - endocytosis involved in viral entry into host cell - OG0091630  
+- GO:0051470 - ectoine transport - OG0046989  
+- GO:0033294 - ectoine binding - OG0046989  
+
+
+```bash  
+#! /bin/bash   
+for term in GO:0070836 GO:0075509 GO:0051470 GO:0033294  
+do  
+grep $term Porifera_gain_inter.tsv | cut -f 1 > goterm_orthogroups/$term.txt  
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py -l goterm_orthogroups/$term.txt -d Porifera_gain_seqs -o goterm_orthogroups/$term_og_names.txt -c goterm_orthogroups/$term.tsv   
+done   
+```
+
+
+**Porifera losses:**  
+- GO:0000278 - mitotic cell cycle - OG0007776  
+- GO:0006915 - apoptotic process - OG0020094  
+- GO:0000902 - cell morphogenesis - OG0017665  
+- GO:0031012 - extracellular matrix - OG0078217, OG0034281, OG0023295  
+- GO:0005540 - hyaluronic acid binding - OG0015041
+- GO:0016192 - vesicle mediated transport - OG0025571, OG0012351  
+- GO:0043113 - receptor clustering - OG0032215  
+- GO:0003774 - motor activity - OG0026955, OG0046220, OG0028521, OG0034180, OG0026770
+
+```bash  
+#! /bin/bash   
+for term in GO:0000278 GO:0006915 GO:0000902 GO:0031012 GO:0005540  
+do  
+grep $term losses/Porifera_inter.tsv | cut -f 1 > goterm_orthogroups/$term.txt  
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py -l goterm_orthogroups/$term.txt -d losses/Porifera_seqs -o goterm_orthogroups/$term_og_names.txt -c goterm_orthogroups/$term.tsv   
+done   
+```
+
+Accidentally left off the last three when I first ran this, so now I've corrected that.  
+
+**Ctenophora gains:**  
+- GO:0090307 - mitotic spindle assembly - OG0026271  
+- GO:0030131 - clathrin adaptor complex - OG0037883  
+- GO:0051033 - RNA transmembrane transporter activity - OG0037656, OG0046401  
+
+```bash  
+#! /bin/bash   
+for term in GO:0090307 GO:0030131 GO:0051033  
+do  
+grep $term Ctenophora_inter.tsv | cut -f 1 > goterm_orthogroups/$term.txt  
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py -l goterm_orthogroups/$term.txt -d Ctenophora_seqs -o goterm_orthogroups/$term_og_names.txt -c goterm_orthogroups/$term.tsv   
+done   
+```
+
+
+**Ctenophora losses:**  
+- GO:0007586 - digestion - OG0006549  
+- GO:1904970 - brush border assembly - OG0005896  
+- GO:0043560 - insulin receptor substrate binding - OG0001466  
+
+```bash  
+#! /bin/bash   
+for term in GO:0007586 GO:1904970 GO:0043560  
+do  
+grep $term Ctenophora_loss_inter.tsv | cut -f 1 > goterm_orthogroups/$term.txt  
+/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/og_names_from_seqs.py -l goterm_orthogroups/$term.txt -d losses/Ctenophora_loss_seqs -o goterm_orthogroups/$term_og_names.txt -c goterm_orthogroups/$term.tsv   
+done   
+```
+
 
 I need to find all the GO terms for Metazoa gains and the gains at the sponge+rest node also. Sponge+rest is pretty easy, as I have done all of the steps before for different nodes, and it has a ready-to-go interproscan results file.  
 `cut -f 14 sponge_rest_inter.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > sponge_rest_unique_goterms.txt`  
@@ -469,6 +552,45 @@ I also made a file that has all of the unique GO terms from sponge+rest, without
 
 I ran the raw Metazoa gains list through revigo (small setting) and the sponge+rest (or Porifera+ParaHoxozoa) gains through also (tiny setting) to get their GO info also.  
 
+**Update**  
+I've realized I need to exclude GO terms that overlap with the losses in these two nodes also. The sponge+rest node won't be a huge deal, but the Metazoa losses have never been interproscanned, so I'm going to get that started now so that it can run while I'm working on other edits. I made a file /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/losses/Metazoa_loss.txt of all the orthogroups that have been lost at Metazoa. It's not that many of them, so this should go quickly.  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l Metazoa_loss.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n Metazoa_loss_seqs/`  
+Then I ran the uclust script (above) on these fasta files from within the directory, catted all the clustered/filtered fastas together, and called it "Metazoa_loss_filtered.fa" in the losses directory. Interproscan command was just like all the others.  
+
+For the sponge+rest, I'll need to pull out these losses from one of the gene universe files. Everything present at the Metazoa node will include things that get lost at the sponge+rest node, so that should be a safe interproscan file to draw from.  
+First I'll need the orthogroups, just like before. They are in a file here: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/losses/  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l sponge_rest_loss.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n sponge_rest_loss_seqs/`  
+These I don't need to filter in the same way, since all the sequences have been filtered already, just as part of a different procedure. So when I pull the interproscan results that go with these, they will be filtered results anyway.  
+`grep -h ">" sponge_rest_loss_seqs/*fa | sed 's_>__' > sponge_rest_loss_seq_names.txt`  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l sponge_rest_loss_seq_names.txt -t ../Metazoa_present_all_inter.tsv -o sponge_rest_loss_inter.tsv`  
+`cut -f 14 sponge_rest_loss_inter.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > sponge_rest_loss_unique_goterms.txt`  
+
+I also don't think I need to exclude the GO terms that the Metazoa gains and the sponge_rest gains have in common. It seems pretty reasonable that both those node would be adding the same sorts of gene families. So I'm just going to exclude the losses from both of those nodes, and then do the revigo analyses on those files.  
+
+`comm -23 sponge_rest_unique_goterms.txt losses/sponge_rest_loss_unique_goterms.txt > sponge_rest_noloss_unique_goterms.txt`  
+
+It's not a huge difference, because the losses are a pretty tiny file, but I feel better about this analysis now. Just going to quantify all the overlap so I can make a figure.  
+
+Ctenophora-first, sponge_rest: file 1 = 1416, file 2 = 22, overlap = 22   
+`comm -12 sponge_rest_unique_goterms.txt losses/sponge_rest_loss_unique_goterms.txt | wc -l`  
+
+
+
+For Metazoa: (in the losses directory)  
+`cut -f 14 Metazoa_loss_inter.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > Metazoa_loss_unique_goterms.txt`  
+
+ (in the interesting_orthos directory)  
+ `comm -23 Metazoa_gain_unique_goterms.txt losses/Metazoa_loss_unique_goterms.txt > Metazoa_gain_noloss_unique_goterms.txt`  
+
+ Ctenophora-first, metazoa: file 1 = 708, file 2 = 70, overlap = 59    
+ `comm -12 Metazoa_gain_unique_goterms.txt losses/Metazoa_loss_unique_goterms.txt | wc -l`
+
+
+
+
+
+
+
 
 
 #### Characterizing gains and losses at the cteno and sponge nodes (sponge-first tree)  
@@ -478,13 +600,6 @@ I needed the actual GO terms associated with losses at these two nodes for this 
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Porifera_loss_filtered_seqnames.txt -t gene_universe_Porifera_goterms.tsv -o Porifera_loss_goterms.tsv`  
 
 Then I downloaded these resulting files. I don't need to download "Porifera_gain_inter.tsv" and "Ctenophora_gain_inter.tsv" because they are identical to the ones in the other tree. Again, because the gains are based on the nodes below them, not on the nodes above. I opened them in BBEdit, isolated the GO terms, and popped them into revigo.  
-
-
-
-
-
-
-
 
 
 
