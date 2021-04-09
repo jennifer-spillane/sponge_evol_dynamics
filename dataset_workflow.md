@@ -402,6 +402,13 @@ Porifera-first, ctenophores: file 1 = 271, file 2 = 1920, overlap = 238
 So, all of them have a bit of overlap, but we've excluded the overlap for the revigo analyses, so it will not affect the gains and losses that we are crafting the story around.  
 
 
+#### Qualtifying GO terms for nodes in the sponge-first tree as well  
+
+I need comparison numbers of GO terms for the nodes at the beginning of the sponge first tree, and I don't have them for the Metazoa node under that topology, or the Ctenophora+ParaHoxozoa node. I think I have all the right things interproscanned already, but I need to figure out what combination of things in the ctenofirst tree I need to do this correctly in the sponge first tree.  
+
+
+
+
 #### Characterizing gains and losses at focal nodes (cteno first tree)  
 
 I have put lists of GO terms for the Porifera node into revigo (http://revigo.irb.hr/) which eliminates duplicates and helps with listing and visualizing the terms. I put in the GO terms for Porifera gains, a different one for Porifera losses, and a third one for Porifera losses that also overlap with Porifera losses in the sponge-first tree. These are the losses that no one will be able to dispute, so they could be important. I'm not sure which of these GO terms I should look into first, so I am just going to take a couple of top hits from the gains to begin with, and trace them back to their orthogroups. That way we can make trees from the orthogroups and get a clear idea of what they are in a more specific way than the very general terms that GO stuff annotates with.  
@@ -584,6 +591,53 @@ For Metazoa: (in the losses directory)
 
  Ctenophora-first, metazoa: file 1 = 708, file 2 = 70, overlap = 59    
  `comm -12 Metazoa_gain_unique_goterms.txt losses/Metazoa_loss_unique_goterms.txt | wc -l`
+
+
+
+**For the sponge-first tree:**  
+
+I need to find numbers of GO terms for the gains and losses at Metazoa and Ctenophora+ParaHoxozoa.  
+
+The losses at Metazoa are identical to those in the cteno-first tree, so that means there are 70 GO terms. We can just pop that in an move on.  
+
+For the gains at Metazoa, I just need to find orthogroup sets in the cteno-first tree that contain all of the orthogroups in the Metazoa gains file. Then I can use that combination to pull the interproscan results for the Metazoa gains.  
+From in the sponge_first directory:  
+`wc -l sorted_Metazoa_gains.txt`  14238  
+`comm -12 sorted_Metazoa_gains.txt ../interesting_orthos/sorted_Metazoa_gain.txt | wc -l`  956  
+`comm -12 sorted_Metazoa_gains.txt ../interesting_orthos/sorted_sponge_rest.txt | wc -l`  13283  
+
+Ok, so these together make up all of the orthogroups in the Metazoa gains for the sponge-first tree. So I can combine the interproscan results for these sets of orthogroups and use the Metazoa gains files to pull relevant results.  
+`cat ../interesting_orthos/Metazoa_gain_inter.tsv ../interesting_orthos/sponge_rest_inter.tsv > cf_met_porpara_gains_inter.tsv`  
+
+
+For the gains at the cteno+rest node, we can do a similar process. I noticed earlier that there were 958 orthogroups that were in the Metazoa gains for the cteno-first tree, that were not in the Metazoa gains for the sponge-first tree, so we'll look at those first.  
+`wc -l  sorted_cteno_rest.txt`  958 -  same number  
+`comm -12 sorted_cteno_rest.txt ../interesting_orthos/sorted_Metazoa_gain.txt | wc -l`  958 - this is excellent, will make things much easier.  
+So now I can just use the Metazoa gains from the cteno-first tree by itself to pull the right interproscan results for the cteno+rest gains in the sponge-first tree.   
+
+*Actually, I think I've already done this one. I have a file of all of these unique GO terms already, so I'm just going to leave this one here.*   
+`wc -l cteno_rest_unique_goterms.txt`  185 go terms  
+
+
+For the losses at the cteno_rest node:  
+`wc -l sorted_cteno_rest_loss.txt`  891  
+`comm -12 sorted_cteno_rest_loss.txt ../interesting_orthos/losses/sorted_Ctenophora_loss.txt | wc -l`  891  
+When I compared them to the losses at Ctenophora in the other tree, they overlap completely, so I can use those interproscan results to pull the right things for the losses at this node.  
+
+
+Actually making those files from the interproscan results:  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l cteno_rest_loss.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n cteno_rest_loss_seqs/`  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/pull_alignments.py -l Metazoa_gains.txt -a /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/ -n Metazoa_gains_seqs/`  
+
+
+`grep -h ">" cteno_rest_loss_seqs/*fa | sed 's_>__' > cteno_rest_loss_seq_names.txt`  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l cteno_rest_loss_seq_names.txt -t ../interesting_orthos/Ctenophora_loss_inter.tsv -o cteno_rest_loss_inter.tsv`  
+`cut -f 14 cteno_rest_loss_inter.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > cteno_rest_loss_unique_goterms.txt`  
+
+`grep -h ">" Metazoa_gains_seqs/*fa | sed 's_>__' > Metazoa_gains_seq_names.txt`  
+`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Metazoa_gains_seq_names.txt -t cf_met_porpara_gains_inter.tsv -o Metazoa_gains_inter.tsv`  
+`cut -f 14 Metazoa_gains_inter.tsv | sed 's_|_\n_g' | sed '/^$/d' | sort | uniq > Metazoa_gains_unique_goterms.txt`  
+
 
 
 
