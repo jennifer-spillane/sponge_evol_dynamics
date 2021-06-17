@@ -82,6 +82,41 @@ This script works great, but takes a while to run (unsurprising, considering the
 **More updates:** This is great info to have, but I also just want a simple script that will remove problematic sequences from the interproscan results (obviously all of this is really meant to be done at the beginning of a study before you run a lot of the analyses, but it just doensn't always go down that way). So I wrote one here: `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py` that takes a list of alien (or otherwise problematic) sequence names and an interproscan output tsv file and outputs a new tsv file without all of the results from the sequences named in the list.  
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/no_aliens_interproscan.py -a test_aliens.txt -t test.tsv -o test_done.tsv`  
 
+**Update, 4-29-21:** I want to remove the rest of the alien seqs that I found earlier with the blasting in all the other organisms. So I did the second step, just like I did for sponges, above (the alien_index command in the loop) for each of the four directories that the species are currently in (/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing, and within this one, "second_group", "third_group", and "fourth_group"). Now I need to remove the alien seqs found from the orthogroups. Since the orthogroups are just fasta files, I should be able to do this with Joe's removal command instead of writing my own. In a perfect world, we would do this before running orthofinder, but that is not the world we live in, and this should work fine. I'll run the command on all of the orthogroups using a concattenated file of all the alien seqs.  
+
+The alien_index files have a lot of other stuff in their first line, so I'll need that once at the top, but then to get rid of that stuff before I stick all the rest together.
+`grep "ID" Craspedacusta_sowerbyi.fa.blast.alien_index > all_alien_seqs.txt`  
+`grep -h -v "ID" *.blast.alien_index >> all_alien_seqs.txt`  
+
+Then I just did this in each of the other directories containing these files, and I end up with a file with all the alien seqs in it. Now I can remove them from the orthogroups. I'm going to do this directly in the directory that contains the orthogroups (/mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/) to simplify things, and then I'll just move the clean files to the new one I've set up.   
+```bash  
+for fs in $(ls *fa)
+do
+echo "now working on $fs"
+remove_aliens all_alien_seqs.txt $fs > $fs.clean
+done
+```
+*Doing this in the directory listed above is a bad idea!* I forgot that the directory contains all of the unclassified sequences also, each in their own "orthogroup" file, when really there are only 105,000 or so that actually have multiple sequences. I will copy these actual orthogroups over to my prepared directory (/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/orthogroups), and then just delete them when I've finished with this step. "OG0105176.fa" is the last one I need.  
+
+remove_alien_seqs.sh:  
+
+```bash  
+cp /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/OG001*.fa  
+
+for fs in $(ls *fa)  
+do  
+echo "now working on $fs"  
+/mnt/lustre/macmaneslab/jlh1023/alien_index-master/remove_aliens all_alien_seqs.txt $fs > $fs.clean  
+done  
+
+rm *fa
+```
+
+*A couple of notes:* Make sure you put the path to the executable, and that you've changed the permissions on it so it will actually run. Also, you'll have to change the #! at the top, because as it is, it won't work on premise (needs to be "#! /usr/bin/env perl" instead of whatever was there before). Also also, in the log file it will be all "error: expected to filter 57772 seqs, but filtered 26" but this is FINE, because we combined them all a minute ago, and it thinks we're just doing this for one fasta, which, we aren't.    
+
+Above is an example for one that I did, contained in "remove_alien_seqs.sh" but I also did it in "remove2.sh" to "remove6.sh" for the rest of the files.       
+
+Now I have orthogroup files that have ".clean" tacked on the end that have had alien seqs removed. It is very possible that some of these only contain one sequence at this point, so I will address that in the wrapper script I am writing for the uclust step happening before interproscan. See "dataset_workflow.md" for details.  
 
 **Update, 4-29-21:** I want to remove the rest of the alien seqs that I found earlier with the blasting in all the other organisms. So I did the second step, just like I did for sponges, above (the alien_index command in the loop) for each of the four directories that the species are currently in (/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing, and within this one, "second_group", "third_group", and "fourth_group"). Now I need to remove the alien seqs found from the orthogroups. Since the orthogroups are just fasta files, I should be able to do this with Joe's removal command instead of writing my own. In a perfect world, we would do this before running orthofinder, but that is not the world we live in, and this should work fine. I'll run the command on all of the orthogroups using a concattenated file of all the alien seqs.  
 
