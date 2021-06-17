@@ -118,43 +118,6 @@ Above is an example for one that I did, contained in "remove_alien_seqs.sh" but 
 
 Now I have orthogroup files that have ".clean" tacked on the end that have had alien seqs removed. It is very possible that some of these only contain one sequence at this point, so I will address that in the wrapper script I am writing for the uclust step happening before interproscan. See "dataset_workflow.md" for details.  
 
-**Update, 4-29-21:** I want to remove the rest of the alien seqs that I found earlier with the blasting in all the other organisms. So I did the second step, just like I did for sponges, above (the alien_index command in the loop) for each of the four directories that the species are currently in (/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing, and within this one, "second_group", "third_group", and "fourth_group"). Now I need to remove the alien seqs found from the orthogroups. Since the orthogroups are just fasta files, I should be able to do this with Joe's removal command instead of writing my own. In a perfect world, we would do this before running orthofinder, but that is not the world we live in, and this should work fine. I'll run the command on all of the orthogroups using a concattenated file of all the alien seqs.  
-
-The alien_index files have a lot of other stuff in their first line, so I'll need that once at the top, but then to get rid of that stuff before I stick all the rest together.
-`grep "ID" Craspedacusta_sowerbyi.fa.blast.alien_index > all_alien_seqs.txt`  
-`grep -h -v "ID" *.blast.alien_index >> all_alien_seqs.txt`  
-
-Then I just did this in each of the other directories containing these files, and I end up with a file with all the alien seqs in it. Now I can remove them from the orthogroups. I'm going to do this directly in the directory that contains the orthogroups (/mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/) to simplify things, and then I'll just move the clean files to the new one I've set up.   
-```bash  
-for fs in $(ls *fa)
-do
-echo "now working on $fs"
-remove_aliens all_alien_seqs.txt $fs > $fs.clean
-done
-```
-*Doing this in the directory listed above is a bad idea!* I forgot that the directory contains all of the unclassified sequences also, each in their own "orthogroup" file, when really there are only 105,000 or so that actually have multiple sequences. I will copy these actual orthogroups over to my prepared directory (/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/orthogroups), and then just delete them when I've finished with this step. "OG0105176.fa" is the last one I need.  
-
-remove_alien_seqs.sh:  
-
-```bash  
-cp /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/OrthoFinder/Results_Oct19/Orthogroup_Sequences/OG001*.fa  
-
-for fs in $(ls *fa)  
-do  
-echo "now working on $fs"  
-/mnt/lustre/macmaneslab/jlh1023/alien_index-master/remove_aliens all_alien_seqs.txt $fs > $fs.clean  
-done  
-
-rm *fa
-```
-
-*A couple of notes:* Make sure you put the path to the executable, and that you've changed the permissions on it so it will actually run. Also, you'll have to change the #! at the top, because as it is, it won't work on premise (needs to be "#! /usr/bin/env perl" instead of whatever was there before). Also also, in the log file it will be all "error: expected to filter 57772 seqs, but filtered 26" but this is FINE, because we combined them all a minute ago, and it thinks we're just doing this for one fasta, which, we aren't.    
-
-Above is an example for one that I did, contained in "remove_alien_seqs.sh" but I also did it in "remove2.sh" to "remove6.sh" for the rest of the files.       
-
-Now I have orthogroup files that have ".clean" tacked on the end that have had alien seqs removed. It is very possible that some of these only contain one sequence at this point, so I will address that in the wrapper script I am writing for the uclust step happening before interproscan. See "dataset_workflow.md" for details.  
-
-
 
 ### Do genes in the same orthogroup get annotated with different GO terms?  
 
@@ -166,10 +129,6 @@ I have interproscan results for lots of nodes (gains and losses, but lots of los
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Porifera_loss_OG0000319_seqs.txt -t Porifera_inter.tsv -o Porifera_OG0000319_inter.tsv`  
 
 `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/prune_interpro_results.py -l Porifera_common_losses_seqnames.txt -t gene_universe_Porifera_no_aliens.tsv -o Porifera_common_losses_inter.tsv`
-
-
-
-
 
 
 
@@ -196,3 +155,14 @@ OG0000542.fa.fasta	295
 From here, I'll download it, pop it into bbedit, and remove the file extensions. I'll also add a category at the beginning (followed by a tab) that is either "original" (for the .fa files) or "centroid" (for the .fa.fasta files). Then I import it into excel, do a quick pivot table, and pop it into R for plotting. A little roundabout maybe, but it works and is pretty quick. I tagged this one onto the end of the exploratory plotting R script I already had going for this project, "prelim_stats.R".  
 
 Looking super super linear, so I think we are mostly good. If it clusters in a proportional way each time, our results will be proportional to the results we would have gotten if we had interproscanned the whole dataset.  
+
+
+### Are the same organisms getting picked as centroid sequences all the time?
+
+It's pretty easy to figure out how many orthogroups are represented by each species. I can just grep the genus name in the ___ file I made with just one centroid per orthogroup.  
+
+`grep -c "Acropora" ___`  
+
+But these numbers are obviously influenced by how many sequences each organism had in orthogroups to begin with. Normally OrthoFinder gived those numbers, but since I've done filtering steps after OrthoFinder, they aren't accurrate anymore. So I wrote a script to count the number of sequences each species has in the remaining orthogroups: /mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/ortho_stats.py.  
+
+I ran it like this: `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/ortho_stats.py -d /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/orthogroups -o /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/filtered_species_counts.tsv` in this directory: `/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/`.  
