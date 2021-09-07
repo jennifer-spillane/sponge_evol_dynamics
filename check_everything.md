@@ -166,3 +166,16 @@ It's pretty easy to figure out how many orthogroups are represented by each spec
 But these numbers are obviously influenced by how many sequences each organism had in orthogroups to begin with. Normally OrthoFinder gived those numbers, but since I've done filtering steps after OrthoFinder, they aren't accurrate anymore. So I wrote a script to count the number of sequences each species has in the remaining orthogroups: /mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/ortho_stats.py.  
 
 I ran it like this: `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/ortho_stats.py -d /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/orthogroups -o /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/filtered_species_counts.tsv` in this directory: `/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/`.  
+
+
+### What if the gene families that look like losses in Ctenophores are really just super divergent?
+
+If the ctenos have extra-divergent metabolic genes (or some other category), it might look like they have losses, when really, we just have to look harder for them. Apparently this is a problem especially in ctenos, but it's possible in other organisms too. Something like orthofinder might miss them, so we'll need to use a more sensitive search to try to find them. Maybe we will, which will help us refine the story a little, and maybe we won't, in which case we can be more confident that they are indeed lost.  
+
+I think hh-suite will work well for this. I made a conda environment and installed it on premise.  
+```bash
+ml anaconda/colsa
+conda create --name hhsuite --clone template
+conda activate hhsuite
+conda install -c conda-forge -c bioconda hhsuite
+```
