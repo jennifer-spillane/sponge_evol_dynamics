@@ -165,7 +165,7 @@ This works great for the majority of clades, but I need to interproscan all of t
 **Update 5-5-21:**  
 I have now gotten rid of all of the alien sequences identified by the alien_index program for all of the species in the whole dataset. Occasionally, this leads to orthogroups having fewer than two sequences in them, so I've weeded these out. With all of the orthogroups that still have two or more seqs, I have run `usearch -cluster_fast` to narrow them down to centroid sequences for each orthogroup (see "check_everything.md" for details) and then choose the centroid sequence that is representative of the most sequences. If there are multiples, it will take the longest of these representative sequences. All of this is contained in the script `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/clust_wrapper.py`.   
 
-At the end of this filtering, I have a single fasta file with all the representative sequences for all the orthogroups called "rep_og_seq.fa" that contains 102,288 sequences.
+At the end of this filtering, I have a single fasta file with all the representative sequences for all the orthogroups called "rep_og_seqs.fa" that contains 102,288 sequences.
 
 Now, I can interproscan all of these representative sequences, so that I have one interproscan result per orthogroup. This "rescanning" is happening in this directory: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/rescan. 
 
