@@ -166,3 +166,64 @@ It's pretty easy to figure out how many orthogroups are represented by each spec
 But these numbers are obviously influenced by how many sequences each organism had in orthogroups to begin with. Normally OrthoFinder gived those numbers, but since I've done filtering steps after OrthoFinder, they aren't accurrate anymore. So I wrote a script to count the number of sequences each species has in the remaining orthogroups: /mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/ortho_stats.py.  
 
 I ran it like this: `/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/ortho_stats.py -d /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/orthogroups -o /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/filtered_species_counts.tsv` in this directory: `/mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/`.  
+
+
+### What if the gene families that look like losses in Ctenophores are really just super divergent?
+
+If the ctenos have extra-divergent metabolic genes (or some other category), it might look like they have losses, when really, we just have to look harder for them. Apparently this is a problem especially in ctenos, but it's possible in other organisms too. Something like orthofinder might miss them, so we'll need to use a more sensitive search to try to find them. Maybe we will, which will help us refine the story a little, and maybe we won't, in which case we can be more confident that they are indeed lost.  
+
+I think hh-suite will work well for this. I made a conda environment and installed it on premise.  
+```bash
+ml anaconda/colsa
+conda create --name hhsuite --clone template
+conda activate hhsuite
+conda install -c conda-forge -c bioconda hhsuite
+```
+
+Now I'm going to make a database out of the ctenophore datasets to use when I search. I can do this with normal fastas, according to these instructions: https://github.com/soedinglab/hh-suite/wiki#building-customized-databases, so that's what I'm going to follow.  
+
+First, I need clean cteno assemblies. Before, I eliminated all the putative alien sequences from all the orthogroup files before they got clustered and filtered, but I never did it for the original assemblies themselves. So I want to do that, and then I'll move those cleaned files into a new directory I made here: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/verify_loss/clean_ctenos/. I'm writing a script to do this, because lots of the files are in different locations and I don't remember how long it takes to run. The script is called remove_aliens_ctenos.sh, and I can do it the same way I did for the orthogroups, except not in batches.   
+
+```bash   
+cd /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing  
+
+/mnt/lustre/macmaneslab/jlh1023/alien_index-master/remove_aliens Coeloplana_meteoris.fa.blast.alien_index Coeloplana_meteoris.fa > Coeloplana_meterois_clean.fa  
+/mnt/lustre/macmaneslab/jlh1023/alien_index-master/remove_aliens second_group/Hormiphora_californensis.fa.blast.alien_index second_group/Hormiphora_californensis.fa > Hormiphora_californensis_clean.fa  
+/mnt/lustre/macmaneslab/jlh1023/alien_index-master/remove_aliens third_group/Lampea_pancerina.fa.blast.alien_index third_group/Lampea_pancerina.fasta > Lampea_pancerina_clean.fa  
+/mnt/lustre/macmaneslab/jlh1023/alien_index-master/remove_aliens fourth_group/Vallicula_multiformis.fa.blast.alien_index fourth_group/Vallicula_multiformis.fa > Vallicula_multiformis_clean.fa  
+```  
+
+Alright, that worked great, so now I'm going to copy them (and the Mnemiopsis file from /mnt/lustre/plachetzki/shared/metazoa_2020/above_80/) to the new clean ctenos directory (above). I'll be working from there for this next part. And now I can proceed to try to make a database out of them that can be used by hhsuite. I want them all to be the same database, so I'll cat them all together first.  
+
+`cat *.fa > all_ctenos.fa`  
+
+I also have to download the Uniclust30 database. I'm only going to keep it for as long as I need it, because it's pretty huge. Makes me a little nervous.  
+```bash  
+mkdir databases  
+cd databases  
+wget http://wwwuser.gwdg.de/~compbiol/uniclust/2020_06/UniRef30_2020_06_hhsuite.tar.gz  
+tar xzvf UniRef30_2020_06_hhsuite.tar.gz  
+```  
+
+The next steps I'm going to put into a script, as I have no idea how long they take, and it might be a while. Script is called make_cteno_db.sh.   
+
+```bash
+module purge
+module load anaconda/colsa
+conda activate hhsuite
+
+cd /mnt/lustre/macmaneslab/jlh1023/chap3_2020/verify_loss/
+
+ffindex_from_fasta -s clean_ctenos/all_ctenos.fa.ffdata clean_ctenos/all_ctenos.fa.ffindex clean_ctenos/all_ctenos.fa
+hhblits_omp -i clean_ctenos/all_ctenos.fa -d /mnt/lustre/macmaneslab/jlh1023/chap3_2020/verify_loss/databases/UniRef30_2020_06 -oa3m cteno_db_a3m_wo_ss -n 2 -cpu 1 -v 0  
+```  
+
+Notes: You definitely have to include the whole prefix of the UniRef database. That makes sense, but I wasn't sure if it would just look for files with those endings or if it would need more of a hint than that. Errored right away for me without it. Also, when the hhsuite docs say something like "<db>_fas.ff{data,index}" they mean that you need to put in two files/filenames, one that ends in "data" and one that ends in "index". Maybe this is obvious or standard notation, but I didn't realize this. Also also, don't forget that the command is "hhblits_omp", otherwise it will not work, and will give you error messages that make no sense and have nothing to do with the actual problem.  
+  
+Now I need the query sequences so that I can search the clean ctenophore database I made. There is a list of orthogroups that the ctenophores have lost here: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/losses/Ctenophora_loss.txt. It contains 6181 orthogroup names. There is also a file with all of the centroid sequences that I identified (and interproscanned) for all of the orthogroups, here: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/rescan/rep_og_seqs.fa. These still have the orthogroup name associated with them, so I should be able to pull the correct ones out relatively easily.  
+  
+Ok, I wrote a script that will take a list of OG names and pull out sequences from a fasta file that has matching OG names in the fasta headers, like those I mentioned above. The script is called "matching_orthos.py" and is here: /mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/matching_orthos.py. When I ran it with the above files (`/mnt/lustre/macmaneslab/jlh1023/pipeline_dev/pipeline_scripts/matching_orthos.py -l /mnt/lustre/macmaneslab/jlh1023/chap3_2020/interesting_orthos/losses/Ctenophora_loss.txt -i /mnt/lustre/macmaneslab/jlh1023/chap3_2020/rescan/rep_og_seqs.fa -o /mnt/lustre/macmaneslab/jlh1023/chap3_2020/verify_loss/cteno_missing_og_seqs.fa`), I get a fasta file with 6068 sequences in it. The list of Ctenophore losses has 6181 og names in it, so not all of them were found in the fasta file of all the representative sequences from the orthogroups. I think this is okay, as they could have been lost at various points, like when I filtered for orthogroups that were too small, but I wanted to pull out the names in case I want to trace them later. So I wrote a different version of the same script, called "matching_orthos2.py" in the same location. It is identical to the first, but it also has a section that captures all the matching ones in a set, and finds the difference between that set and the set containing the original OG names I was trying to match. Then it just prints the different to the screen, which I captured in a file, "non_matching.txt". I copied the file into a bbedit window (just because I like them better), and fixed the formatting so that I can tell what's going on. There are 112 orthogroup names that did not have matches in the fasta file of representative sequences. They are all fairly high numbers, which manes me think that they may have gotten filtered out from a lack of enough sequences. I can investigate more later, after I talk to Dave tomorrow.  
+  
+In the meantime, I now have the fasta file I need to be the query sequences in the search with the database I made for/with hhblitz. So I can press forward there.  
+  
+
