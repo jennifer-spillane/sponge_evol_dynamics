@@ -228,4 +228,31 @@ Ok, I wrote a script that will take a list of OG names and pull out sequences fr
   
 In the meantime, I now have the fasta file I need to be the query sequences in the search with the database I made for/with hhblitz. So I can press forward there.  
   
-
+*Update 11-10-21:* I put this down for a while because I was waiting for the database to finish getting made. Turns out, it takes a million years, so I'm looking into making it out of the query sequences instead. To that end, I need to find out where these missing sequences went.  
+  
+I am starting by looking more closely into the orthogroups that got filtered out at the clust_wrapper.py step. It takes all the orthogroups from the alien indexing step (so they have now been cleaned) and filters them to exclude any that no longer have multiple sequences (because the other sequences were aliens that got eliminated). This gets rid of a fair number of orthogroups. It drops from 105,177 orthogroups (I counted the ones in this directory /mnt/lustre/macmaneslab/jlh1023/chap3_2020/alien_indexing/orthogroups/ that have "clean" in the file name [it's actually too many to straight up count, but you can list it and then use grep count to get around that]) to 102,288 in the representative sequences file that comes out of the wrapper script. I made lists of both of these orthogroup collections, and eliminated the other parts of the lists so that it is just OG names in each one.  
+  
+I've popped both lists into this directory `/mnt/lustre/macmaneslab/jlh1023/chap3_2020/verify_loss` just so I don't junk up my main directory with a bunch of stuff. The cleaned one (105,177 OGs) is called "clean_og_list.txt" and the one that comes out of clust_wrapper.py (102,288 OGs) is called "filtered_clean_og_list.txt".  
+  
+```bash  
+sort clean_og_list.txt > sorted_clean_og_list.txt  
+sort filtered_clean_og_list.txt > sorted_filtered_clean_og_list.txt  
+#check to make sure all the OGs in the filtered file are also in the clean one  
+comm -12 sorted_clean_og_list.txt sorted_filtered_clean_og_list.txt | wc -l  
+#102,288 we're good.  
+comm -23 sorted_clean_og_list.txt sorted_filtered_clean_og_list.txt > eliminated_og_list.txt  
+```  
+  
+So now I have this file of 2,889 OGs that got filtered out during the clust_wrapper.py step. I think I'm going to do the same thing with the ctenophore losses. If I can compare the file of all the cteno losses to the file of the centroids I was able to pull out for the cteno losses, I'm hoping the OGs that make up the difference between those files can all be found in the 2,889 OGs in the file I just made that were eliminated. Here goes.  
+  
+I copied the list of ctenopore losses (this might actually have to get updated since we just reran the whole R script with the fully clean set of OGs, but the ctenos were already clean, so I'm going with it) into this directory, so now it also exists here: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/verify_loss/cteno_loss_list.txt. I also isolated the OG names from the file that contains all the centroid seqs that represent the cteno losses (just grepped for the headers, downloaded and cleaned up in bbedit, then uploaded again) in this file: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/verify_loss/cteno_loss_rep_list.txt. Now I can just use the same procedure as before, and find where they don't overlap.  
+  
+`comm -23 sorted_cteno_loss_list.txt sorted_cteno_loss_rep_list.txt > non_centroid_cteno_loss.txt`  
+This file contains 113 OG names that are present in the cteno losses, but didn't make it into the centroids that the ctenos lost.  
+  
+`comm -12 eliminated_og_list.txt non_centroid_cteno_loss.txt | wc -l`  
+When I first ran this command, I was really bummed out, because the output was 112. **112!** But when I shifted the flag to show the unique thing that the non_centroid_cteno_loss.txt file had (comm -13), it turned out to be a blank line. So it was really only 112 OGs that were missing all along, and they are no longer missing, which is awesome. And there was nothing wrong with the script that I wrote to pull out the centroids of the losses, which is doubly awesome.  
+  
+Now I can make a database out of these sequences, maybe instead of all the clean cteno sequences, and that might actually finish someday.  
+  
+I set it up in the faster way Toni told me about, and set it to run. Slurm script is here: /mnt/lustre/macmaneslab/jlh1023/chap3_2020/verify_loss/loss_cteno_db.sh
